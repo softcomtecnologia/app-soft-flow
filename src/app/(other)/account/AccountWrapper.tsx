@@ -25,7 +25,7 @@ export default function AccountWrapper({ bottomLinks, children }: AccountWrapper
 								<Card.Header className="pt-4 pb-4 text-center bg-primary">
 									<Link href="/">
 										<span>
-											<Image src={Logo} alt="" height="22" />
+											<Image src={Logo} alt="" height="60" />
 										</span>
 									</Link>
 								</Card.Header>
