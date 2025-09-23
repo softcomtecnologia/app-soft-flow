@@ -22,16 +22,14 @@ export default function CasesModal() {
 
     return (
         <>
-            {/* Botão abre modal */}
             <Button
                 variant="primary"
-                className="w-100 w-md-auto"
+                className="w-auto"
                 onClick={() => openModalWithClass("modal-full-width")}
             >
                 <i className="mdi mdi-plus me-1"></i> Adicionar Novo Caso
             </Button>
 
-            {/* Modal */}
             <Modal
                 show={isOpen}
                 onHide={toggleModal}
@@ -67,63 +65,66 @@ export default function CasesModal() {
                 <Form onSubmit={handleSubmit(onSubmit)}>
                     <Modal.Body className="p-4">
                         <Row className="gx-4">
-                            {/* Coluna Esquerda */}
                             <Col md={8}>
-                                {/* Cabeçalho */}
                                 <Card className="mb-3 shadow-sm border-0">
                                     <Card.Header className="bg-light fw-bold text-dark border-bottom">
                                         Cabeçalho
                                     </Card.Header>
                                     <Card.Body>
                                         <Row className="g-3">
-                                            <Col md={6}>
-                                                <Form.Label>Data</Form.Label>
-                                                <Form.Control type="datetime-local" {...register("data")} />
-                                            </Col>
-                                            <Col md={6}>
-                                                <Form.Label>Produto*</Form.Label>
-                                                <Form.Control type="text" {...register("produto")} />
-                                            </Col>
-                                            <Col md={6}>
-                                                <Form.Label>Versão</Form.Label>
-                                                <Form.Control type="text" {...register("versao")} />
-                                            </Col>
-                                            <Col md={6}>
-                                                <Form.Label>Projeto</Form.Label>
-                                                <Form.Control type="text" {...register("projeto")} />
-                                            </Col>
-                                            <Col md={12}>
-                                                <Form.Label>Importância</Form.Label>
-                                                <Form.Control type="number" {...register("importancia")} />
-                                            </Col>
+																					<Col md={3}>
+																							<Form.Label>Data</Form.Label>
+																							<Form.Control type="datetime-local" {...register("data")} />
+																					</Col>
+																					<Col md={3}>
+																							<Form.Label>Produto*</Form.Label>
+																							<Form.Control type="text" {...register("produto")} />
+																					</Col>
+
+																					<Col md={3}>
+																							<Form.Label>Projeto</Form.Label>
+																							<Form.Control type="text" {...register("projeto")} />
+																					</Col>
+																					<Col md={3}>
+																						<Form.Label>Versão</Form.Label>
+																						<Form.Control type="text" {...register("versao")} />
+																					</Col>
                                         </Row>
+																				<Row className="g-3">
+																					<Col md={3}>
+																						<Form.Label>Módulo</Form.Label>
+																						<Form.Control type="text" {...register("modulo")} />
+																					</Col>
+																					<Col md={3}>
+																						<Form.Label>Origem</Form.Label>
+																						<Form.Control type="text" {...register("origem")} />
+																					</Col>
+																					<Col md={3}>
+																						<Form.Label>Categoria</Form.Label>
+																						<Form.Control type="text" {...register("categoria")} />
+																					</Col>
+																					<Col md={3}>
+																						<Form.Label>Relator</Form.Label>
+																						<Form.Control type="text" {...register("relator")} />
+																					</Col>
+																				</Row>
+																			<Row className="g-3">
+
+																				<Col md={2}>
+																					<Form.Label>Importância</Form.Label>
+																					<Form.Control type="number" {...register("importancia")} />
+																				</Col>
+																				</Row>
+
                                     </Card.Body>
                                 </Card>
 
-                                {/* Classificação */}
                                 <Card className="mb-3 shadow-sm border-0">
                                     <Card.Header className="bg-light fw-bold text-dark border-bottom">
                                         Classificação
                                     </Card.Header>
                                     <Card.Body>
-                                        <Row className="g-3">
-                                            <Col md={6}>
-                                                <Form.Label>Módulo</Form.Label>
-                                                <Form.Control type="text" {...register("modulo")} />
-                                            </Col>
-                                            <Col md={6}>
-                                                <Form.Label>Origem</Form.Label>
-                                                <Form.Control type="text" {...register("origem")} />
-                                            </Col>
-                                            <Col md={6}>
-                                                <Form.Label>Categoria</Form.Label>
-                                                <Form.Control type="text" {...register("categoria")} />
-                                            </Col>
-                                            <Col md={6}>
-                                                <Form.Label>Relator</Form.Label>
-                                                <Form.Control type="text" {...register("relator")} />
-                                            </Col>
-                                        </Row>
+
                                     </Card.Body>
                                 </Card>
 
@@ -149,9 +150,7 @@ export default function CasesModal() {
                                 </Card>
                             </Col>
 
-                            {/* Coluna Direita */}
                             <Col md={4}>
-                                {/* Atribuição e Status */}
                                 <Card className="mb-3 shadow-sm border-0">
                                     <Card.Header className="bg-light fw-bold text-dark border-bottom">
                                         Atribuição e Status
@@ -182,7 +181,6 @@ export default function CasesModal() {
                                     </Card.Body>
                                 </Card>
 
-                                {/* Flags */}
                                 <Card className="mb-3 shadow-sm border-0">
                                     <Card.Header className="bg-light fw-bold text-dark border-bottom">
                                         Viabilidade e Checks
@@ -198,7 +196,6 @@ export default function CasesModal() {
                                     </Card.Body>
                                 </Card>
 
-                                {/* Informações adicionais */}
                                 <Card className="shadow-sm border-0">
                                     <Card.Header className="bg-light fw-bold text-dark border-bottom">
                                         Informações Adicionais
@@ -210,7 +207,6 @@ export default function CasesModal() {
                             </Col>
                         </Row>
 
-                        {/* Rodapé */}
                         <Card className="mt-4 shadow-sm border-0">
                             <Card.Header className="bg-light fw-bold text-dark border-bottom">Rodapé</Card.Header>
                             <Card.Body>
