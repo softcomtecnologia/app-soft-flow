@@ -37,7 +37,7 @@ const Header = () => {
 const Step1 = ({showButtons}: { showButtons?: boolean }) => {
     const {nextStep} = useWizard();
     return (
-        <Form>
+        <Form>      
             <Form.Group as={Row} className="mb-3">
                 <Form.Label htmlFor="exampleEmail" column md={3}>
                     Email
