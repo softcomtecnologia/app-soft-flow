@@ -1,15 +1,36 @@
+"use client"
 import PageBreadcrumb from '@/components/PageBreadcrumb';
-import { Button, Card, CardBody, Col, Row } from 'react-bootstrap';
+import { Card, CardBody, Col, Row, ToastContainer } from 'react-bootstrap';
 import OrderStatus from './caseFilters';
-import { casesData } from './data';
-import type { Metadata } from 'next';
 import CasesTable from './cases';
 import Kpis from './kpis';
 import CasesModal from './casesModal';
-
-export const metadata: Metadata = { title: 'Orders' };
+import { useEffect, useState } from 'react';
+import { all as caseAll } from '@/services/caseServices';
+import { toast } from 'react-toastify';
+import { ICase } from '@/types/cases/ICase';
 
 const CasesList = () => {
+	const [cases, setCases] = useState<ICase[]>([]);
+	const [loading, setLoading] = useState<boolean>(false);
+
+	useEffect(() => {
+		setLoading(true);
+
+		const fetchData = async () => {
+			try {
+				const response = await caseAll();
+				setCases(response.data);
+			} catch (error) {
+				toast.error("Não foi possível obter os dados");
+			} finally {
+				setLoading(false);
+			}
+		};
+
+		fetchData();
+	}, []);
+
 	return (
 		<>
 			<PageBreadcrumb title="Casos" subName="CRM" />
@@ -33,16 +54,17 @@ const CasesList = () => {
 							</div>
 
 							<Row className="g-3 mb-3">
-								<Kpis />
+								<Kpis loading={loading} />
 							</Row>
 
 							<div className="table-responsive">
-								<CasesTable data={casesData} />
+								<CasesTable data={cases} loading={loading} />
 							</div>
 						</CardBody>
 					</Card>
 				</Col>
 			</Row>
+			<ToastContainer />
 		</>
 	);
 };

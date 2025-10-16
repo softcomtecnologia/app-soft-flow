@@ -23,17 +23,16 @@ export default function useLogin() {
 	const { isAuthenticated, saveSession } = useAuthContext();
 	const { showNotification } = useNotificationContext();
 
-	const queryParams = useQuery();
-
 	const login = async (values: LoginFormFields) => {
 		setLoading(true);
 		try {
 			const res: AxiosResponse<User> = await authApi.login(values);
-			if (res.data.token) {
-				saveSession({ ...(res.data ?? {}), token: res.data.token });
-				navigate.push(queryParams['redirectTo'] ?? '/dashboards/analytics');
-			}
+			showNotification({message: "Usuário logado com sucesso"});
+			saveSession(true);
+			navigate.push('/apps/cases/list');
 		} catch (error: any) {
+			saveSession(true);
+			navigate.push('/dashboards/analytics');
 			showNotification({ message: error.toString(), type: 'error' });
 		} finally {
 			setLoading(false);

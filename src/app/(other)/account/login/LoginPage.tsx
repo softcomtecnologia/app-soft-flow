@@ -5,6 +5,7 @@ import { Button, Col, Row } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import AccountWrapper from '../AccountWrapper';
 import useLogin from '../login2/useLogin';
+import { FormProvider } from 'react-hook-form';
 
 const BottomLink = () => {
 	const { t } = useTranslation();
@@ -32,7 +33,7 @@ const LoginPage = () => {
 				<h4 className="text-dark-50 text-center mt-0 fw-bold">{t('Sign In')}</h4>
 				<p className="text-muted mb-4">{t('Enter your username and password to access admin panel.')}</p>
 			</div>
-			<Form onSubmit={login} defaultValues={{ email: 'hyper@coderthemes.com', password: 'Hyper' }}>
+			<Form onSubmit={login} defaultValues={{ email: 'emailexemplo@gmail.com', password: 'Hyper' }}>
 				<Row>
 					<Col>
 						<TextInput label={t('Email Address')} name="email" type="email" placeholder={t('Enter your email')} containerClass="mb-3" />

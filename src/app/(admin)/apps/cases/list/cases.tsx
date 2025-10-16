@@ -2,99 +2,101 @@ import classNames from 'classnames';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Badge, FormCheck, Table } from 'react-bootstrap';
-import { Case } from './types'; 
+import { ICase } from '@/types/cases/ICase';
+import ListSkelleton from '@/app/(admin)/apps/cases/list/skelletons/listSkelleton';
 
-export type CasesProps = {
-  data: Case[];
+type Props = {
+	data: ICase[] | null;
+	loading: boolean;
 };
 
-const CasesTable = ({ data }: CasesProps) => {
-  return (
-    <Table responsive className="table-centered table-nowrap mb-0">
-      <thead className="table-light">
-        <tr>
-          <th style={{ width: '20px' }}>
-            <form>
-              <FormCheck type="checkbox" id="all-cases" />
-            </form>
-          </th>
-          <th>Número do Caso</th>
-          <th>Aberto por</th>
-          <th>Versão</th>
-          <th>Tempo (h)</th>
-          <th>Descrição / Resumo</th>
-          <th>Status</th>
-          <th style={{ width: '125px' }}>Ações</th>
-        </tr>
-      </thead>
-      <tbody>
-        {(data || []).map((c, index) => (
-          <tr key={index}>
-            <td>
-              <form>
-                <FormCheck type="checkbox" id={c.caseNumber} />
-              </form>
-            </td>
+const CasesTable = ({ data, loading }: Props) => {
+	return (
+		<Table responsive className="table-centered table-nowrap mb-0">
+			<thead className="table-light">
+			<tr>
+				<th style={{ width: '20px' }}>
+					<form>
+						<FormCheck type="checkbox" id="all-cases" />
+					</form>
+				</th>
+				<th>Número do Caso</th>
+				<th>Aberto por</th>
+				<th>Produto</th>
+				<th>Versão</th>
+				<th>Tempo (Minutos)</th>
+				<th>Descrição / Resumo</th>
+				<th>Status</th>
+				<th style={{ width: '125px' }}>Ações</th>
+			</tr>
+			</thead>
 
-            <td>
-              <Link href="#" className="text-body fw-bold">
-                {c.caseNumber}
-              </Link>
-            </td>
+			<tbody>
+			{loading ? (
+				<ListSkelleton rows={10} />
+			) : (data || []).length ? (
+				(data || []).map((c) => (
+					<tr key={c.numero_caso}>
+						<td>
+							<form>
+								<FormCheck type="checkbox" id={`${c.numero_caso}`} />
+							</form>
+						</td>
 
-            <td>
-              <div className="d-flex align-items-center">
-                <div className="flex-shrink-0">
-                  <Image src={c.openedBy.avatar} className="rounded-circle avatar-xs" alt={c.openedBy.name} />
-                </div>
-                <div className="flex-grow-1 ms-2">
-                  <h5 className="my-0">{c.openedBy.name}</h5>
-                </div>
-              </div>
-            </td>
+						<td>
+							<Link href="#" className="text-body fw-bold">
+								{c.numero_caso}
+							</Link>
+						</td>
 
-            <td>
-              <span className="text-muted">{c.version}</span>
-            </td>
+						<td><span className="text-muted">{c.atribuido_para_nome}</span></td>
 
-            <td>
-              <span className="fw-semibold">{c.hoursOpen}</span>
-            </td>
+						<td><span className="text-muted">{c.produto}</span></td>
 
-            <td style={{ maxWidth: 360 }}>
-              <p className="mb-0 text-truncate" title={c.summary}>
-                {c.summary}
-              </p>
-            </td>
+						<td><span className="text-muted">{c.versao_produto}</span></td>
 
-            <td>
-              <h5 className="my-0">
-                <Badge
-                  bg=""
-                  className={classNames({
-                    'badge-success-lighten': c.status === 'Aberto',
-                    'badge-warning-lighten': c.status === 'Em Análise',
-                    'badge-secondary-lighten': c.status === 'Fechado',
-                  })}
-                >
-                  {c.status}
-                </Badge>
-              </h5>
-            </td>
+						<td><span className="fw-semibold">{c.estimado}</span></td>
 
-            <td>
-              <Link href="#" className="action-icon" aria-label="Editar caso">
-                <i className="mdi mdi-square-edit-outline"></i>
-              </Link>
-              <Link href="#" className="action-icon" aria-label="Excluir caso">
-                <i className="mdi mdi-delete"></i>
-              </Link>
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </Table>
-  );
+						<td style={{ maxWidth: 360 }}>
+							<p className="mb-0 text-truncate" title={c.descricao_resumo}>
+								{c.descricao_resumo}
+							</p>
+						</td>
+
+						<td>
+							<h5 className="my-0">
+									{c.status_caso}
+							</h5>
+						</td>
+
+						<td>
+							<Link
+								href="#"
+								className="action-icon"
+								aria-label="Editar caso"
+							>
+								<i className="mdi mdi-square-edit-outline"></i>
+							</Link>
+							<Link
+								href="#"
+								className="action-icon"
+								aria-label="Excluir caso"
+							>
+								<i className="mdi mdi-delete"></i>
+							</Link>
+						</td>
+					</tr>
+				))
+			) : (
+				<tr>
+					<td colSpan={8} className="text-center text-muted py-4">
+						Nenhum caso encontrado.
+					</td>
+				</tr>
+			)}
+			</tbody>
+		</Table>
+	);
 };
 
 export default CasesTable;

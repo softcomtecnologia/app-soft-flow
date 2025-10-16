@@ -1,13 +1,13 @@
 'use client';
 import type { ChildrenType } from '@/types/component-props';
 import type { User } from '@/types/User';
-import { deleteCookie, getCookie, hasCookie, setCookie } from 'cookies-next';
-import { createContext, useContext, useState } from 'react';
+import { deleteCookie, getCookie, setCookie, useGetCookie } from 'cookies-next';
+import { createContext, useContext, useState, useEffect } from 'react';
 
 export type AuthContextType = {
 	user: User | undefined;
-	isAuthenticated: boolean | Promise<boolean>;
-	saveSession: (session: User) => void;
+	isAuthenticated: boolean;
+	saveSession: (auth: boolean) => void;
 	removeSession: () => void;
 };
 
@@ -21,32 +21,39 @@ export function useAuthContext() {
 	return context;
 }
 
-const authSessionKey = '_HYPER_AUTH_KEY_';
+const authSessionKey = 'access_token';
 
 export function AuthProvider({ children }: ChildrenType) {
-	const getSession = (): AuthContextType['user'] => {
+
+	const getSession = (): User | undefined => {
 		const fetchedCookie = getCookie(authSessionKey)?.toString();
-		if (!fetchedCookie) return;
+		if (!fetchedCookie) return undefined;
 		else return JSON.parse(fetchedCookie);
 	};
 
 	const [user, setUser] = useState<User | undefined>(getSession());
+	const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
-	const saveSession = (user: User) => {
-		setCookie(authSessionKey, JSON.stringify(user));
-		setUser(user);
+	useEffect(() => {
+		const checkAuth = getCookie(authSessionKey) !== undefined;
+		setIsAuthenticated(checkAuth);
+	}, []);
+
+	const saveSession = (auth: boolean) => {
+		setIsAuthenticated(auth);
 	};
 
 	const removeSession = () => {
 		deleteCookie(authSessionKey);
 		setUser(undefined);
+		setIsAuthenticated(false);
 	};
 
 	return (
 		<AuthContext.Provider
 			value={{
 				user,
-				isAuthenticated: hasCookie(authSessionKey),
+				isAuthenticated: isAuthenticated,
 				saveSession,
 				removeSession,
 			}}
@@ -55,3 +62,4 @@ export function AuthProvider({ children }: ChildrenType) {
 		</AuthContext.Provider>
 	);
 }
+
