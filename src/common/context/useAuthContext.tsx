@@ -1,7 +1,7 @@
 'use client';
 import type { ChildrenType } from '@/types/component-props';
 import type { User } from '@/types/User';
-import { deleteCookie, getCookie, setCookie, useGetCookie } from 'cookies-next';
+import { deleteCookie, getCookie, setCookie } from 'cookies-next';
 import { createContext, useContext, useState, useEffect } from 'react';
 
 export type AuthContextType = {
@@ -24,23 +24,31 @@ export function useAuthContext() {
 const authSessionKey = 'access_token';
 
 export function AuthProvider({ children }: ChildrenType) {
-
-	const getSession = (): User | undefined => {
-		const fetchedCookie = getCookie(authSessionKey)?.toString();
-		if (!fetchedCookie) return undefined;
-		else return JSON.parse(fetchedCookie);
+	const getSession = (): boolean => {
+		const token = getCookie(authSessionKey);
+		return !!token;
 	};
 
-	const [user, setUser] = useState<User | undefined>(getSession());
-	const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+	const [user, setUser] = useState<User | undefined>(undefined);
+	const [isAuthenticated, setIsAuthenticated] = useState<boolean>(getSession()); // Inicia com o estado do cookie
 
 	useEffect(() => {
-		const checkAuth = getCookie(authSessionKey) !== undefined;
+		const checkAuth = getSession();
 		setIsAuthenticated(checkAuth);
+
+		if (checkAuth) {
+			const user = JSON.parse(getCookie(authSessionKey)?.toString() || '{}');
+			setUser(user);
+		}
 	}, []);
 
 	const saveSession = (auth: boolean) => {
 		setIsAuthenticated(auth);
+		if (auth) {
+			setCookie(authSessionKey, JSON.stringify(user));
+		} else {
+			deleteCookie(authSessionKey);
+		}
 	};
 
 	const removeSession = () => {
@@ -53,7 +61,7 @@ export function AuthProvider({ children }: ChildrenType) {
 		<AuthContext.Provider
 			value={{
 				user,
-				isAuthenticated: isAuthenticated,
+				isAuthenticated,
 				saveSession,
 				removeSession,
 			}}
@@ -62,4 +70,3 @@ export function AuthProvider({ children }: ChildrenType) {
 		</AuthContext.Provider>
 	);
 }
-

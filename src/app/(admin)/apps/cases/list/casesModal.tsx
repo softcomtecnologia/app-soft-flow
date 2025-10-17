@@ -15,13 +15,6 @@ export default function CasesModal() {
         toggleModal();
     };
 
-    const logs = [
-        { abertura: "19/09/2025 15:41", fechamento: "19/09/2025 16:06", tempo: "00:25", tipo: "DESENVOLVENDO", usuario: "Lins", projeto: "2959", valeu: "Vinicius" },
-        { abertura: "19/09/2025 15:08", fechamento: "19/09/2025 15:33", tempo: "00:25", tipo: "DESENVOLVENDO", usuario: "Lins", projeto: "2959", valeu: "Vinicius" },
-        { abertura: "19/09/2025 13:56", fechamento: "19/09/2025 14:08", tempo: "00:12", tipo: "DESENVOLVENDO", usuario: "Lins", projeto: "2959", valeu: "Vinicius" },
-        { abertura: "19/09/2025 11:48", fechamento: "19/09/2025 11:53", tempo: "00:05", tipo: "DESENVOLVENDO", usuario: "Lins", projeto: "2959", valeu: "Vinicius" },
-    ];
-
     return (
         <>
             <Button

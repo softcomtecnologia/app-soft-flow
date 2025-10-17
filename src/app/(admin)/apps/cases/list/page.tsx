@@ -1,40 +1,19 @@
-"use client"
+'use client';
 import PageBreadcrumb from '@/components/PageBreadcrumb';
 import { Card, CardBody, Col, Row, ToastContainer } from 'react-bootstrap';
 import OrderStatus from './caseFilters';
 import CasesTable from './cases';
 import Kpis from './kpis';
 import CasesModal from './casesModal';
-import { useEffect, useState } from 'react';
-import { all as caseAll } from '@/services/caseServices';
-import { toast } from 'react-toastify';
-import { ICase } from '@/types/cases/ICase';
+import { CasesProvider, useCasesContext } from '@/contexts/casesContext';
+import { FormProvider } from 'react-hook-form';
 
 const CasesList = () => {
-	const [cases, setCases] = useState<ICase[]>([]);
-	const [loading, setLoading] = useState<boolean>(false);
-
-	useEffect(() => {
-		setLoading(true);
-
-		const fetchData = async () => {
-			try {
-				const response = await caseAll();
-				setCases(response.data);
-			} catch (error) {
-				toast.error("Não foi possível obter os dados");
-			} finally {
-				setLoading(false);
-			}
-		};
-
-		fetchData();
-	}, []);
+	const { cases, loading } = useCasesContext();
 
 	return (
 		<>
 			<PageBreadcrumb title="Casos" subName="CRM" />
-
 			<Row>
 				<Col xs={12}>
 					<Card>
@@ -69,4 +48,10 @@ const CasesList = () => {
 	);
 };
 
-export default CasesList;
+const CasesListWithProvider = () => (
+	<CasesProvider>
+		<CasesList />
+	</CasesProvider>
+);
+
+export default CasesListWithProvider;

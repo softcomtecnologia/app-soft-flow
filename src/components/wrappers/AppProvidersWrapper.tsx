@@ -4,8 +4,7 @@ import { configureFakeBackend } from '@/common/api';
 import { AuthProvider } from '@/common/context/useAuthContext';
 import type { ChildrenType } from '@/types/component-props';
 import { useEffect } from 'react';
-// import dynamic from 'next/dynamic'
-// const LayoutProvider = dynamic(() => import('@/context/useLayoutContext').then((mod) => mod.LayoutProvider), { ssr: false })
+import { CasesProvider } from '@/contexts/casesContext';
 
 configureFakeBackend();
 const AppProvidersWrapper = ({ children }: ChildrenType) => {
@@ -35,7 +34,9 @@ const AppProvidersWrapper = ({ children }: ChildrenType) => {
 		<>
 			<AuthProvider>
 				<ThemeProvider>
-					<NotificationProvider>{children}</NotificationProvider>
+					<NotificationProvider>
+							{children}
+					</NotificationProvider>
 				</ThemeProvider>
 			</AuthProvider>
 		</>

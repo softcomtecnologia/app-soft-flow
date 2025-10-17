@@ -114,7 +114,7 @@ const MENU_ITEMS: MenuItemType[] = [
         key: 'apps-cases',
         label: 'Casos',
         isTitle: false,
-        badge: {variant: 'danger', text: 'New'},
+        // badge: {variant: 'danger', text: 'New'},
         icon: 'uil-file',
         children: [
             {
@@ -123,24 +123,24 @@ const MENU_ITEMS: MenuItemType[] = [
                 url: '/apps/cases/list',
                 parentKey: 'apps-crm',
             },
-            {
-                key: 'crm-projects',
-                label: 'Projects',
-                url: '/apps/crm/projects',
-                parentKey: 'apps-crm',
-            },
-            {
-                key: 'crm-clients',
-                label: 'Clients',
-                url: '/apps/crm/clients',
-                parentKey: 'apps-crm',
-            },
-            {
-                key: 'crm-management',
-                label: 'Management',
-                url: '/apps/crm/management',
-                parentKey: 'apps-crm',
-            },
+            // {
+            //     key: 'crm-projects',
+            //     label: 'Projects',
+            //     url: '/apps/crm/projects',
+            //     parentKey: 'apps-crm',
+            // },
+            // {
+            //     key: 'crm-clients',
+            //     label: 'Clients',
+            //     url: '/apps/crm/clients',
+            //     parentKey: 'apps-crm',
+            // },
+            // {
+            //     key: 'crm-management',
+            //     label: 'Management',
+            //     url: '/apps/crm/management',
+            //     parentKey: 'apps-crm',
+            // },
         ],
     },
     // {
