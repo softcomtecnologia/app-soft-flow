@@ -1,44 +1,62 @@
 'use client';
-import { Form as RHForm, SelectInput, TextInput } from '@/components/Form';
-import { Col, Form, Row } from 'react-bootstrap';
-import * as yup from 'yup';
+import { TextInput } from '@/components/Form';
+import { Button, Col, Form, Row } from 'react-bootstrap';
+import { FormProvider, useForm } from 'react-hook-form';
+import ICaseFilter from '@/types/cases/ICaseFilter';
+import { useCasesContext } from '@/contexts/casesContext';
 
 const CaseFilters = () => {
-  const orderSchema = yup.object({
-    email: yup.string().email('Please enter valid email').required('Please enter email'),
-    password: yup.string().required('Please enter password'),
-  });
+	const methods = useForm<ICaseFilter>();
+	const {fetchCases} = useCasesContext();
 
-  return (
-    <RHForm onSubmit={() => {}} schema={orderSchema} className="w-100">
-      <Row className="gy-3 gx-3 align-items-end">
-        <Col xs={12} sm={6} md="auto">
-          <Form.Label className="fw-medium text-muted small">Número do caso</Form.Label>
-          <TextInput type="text" name="search" placeholder="Digite o número..." className="form-control-sm" />
-        </Col>
+	const onSearch = (data: ICaseFilter) => {
+		fetchCases(data);
+	};
 
-        <Col xs={12} sm={6} md="auto">
-          <Form.Label className="fw-medium text-muted small">Status</Form.Label>
-          <SelectInput name="status" className="form-select form-select-sm">
-            <option>Aberto</option>
-            <option>Corrigido</option>
-            <option>Retorno</option>
-            <option>Fechado</option>
-          </SelectInput>
-        </Col>
+	return (
+		<FormProvider {...methods}>
+			<form onSubmit={methods.handleSubmit(onSearch)}>
+				<Row className="gy-3 gx-3 align-items-end">
+					<Col xs={12} sm={6} md="auto">
+						<Form.Label className="fw-medium text-muted small">Número do caso</Form.Label>
+						<TextInput
+							{...methods.register('NumeroCaso')}
+							type="text"
+							name="NumeroCaso"
+							placeholder="Digite o número..."
+							className="form-control-sm"
+						/>
+					</Col>
 
-        <Col xs={12} sm={6} md="auto">
-          <Form.Label className="fw-medium text-muted small">Versão</Form.Label>
-          <SelectInput name="versao" className="form-select form-select-sm">
-            <option>1.0</option>
-            <option>1.1</option>
-            <option>2.0</option>
-            <option>2.1</option>
-          </SelectInput>
-        </Col>
-      </Row>
-    </RHForm>
-  );
+					{/*<Col xs={12} sm={6} md="auto">*/}
+					{/*	<Form.Label className="fw-medium text-muted small">Status</Form.Label>*/}
+					{/*	<SelectInput className="form-select form-select-sm">*/}
+					{/*		<option value="Aberto">Aberto</option>*/}
+					{/*		<option value="Corrigido">Corrigido</option>*/}
+					{/*		<option value="Retorno">Retorno</option>*/}
+					{/*		<option value="Fechado">Fechado</option>*/}
+					{/*	</SelectInput>*/}
+					{/*</Col>*/}
+
+					{/*<Col xs={12} sm={6} md="auto">*/}
+					{/*	<Form.Label className="fw-medium text-muted small">Versão</Form.Label>*/}
+					{/*	<SelectInput className="form-select form-select-sm">*/}
+					{/*		<option value="1.0">1.0</option>*/}
+					{/*		<option value="1.1">1.1</option>*/}
+					{/*		<option value="2.0">2.0</option>*/}
+					{/*		<option value="2.1">2.1</option>*/}
+					{/*	</SelectInput>*/}
+					{/*</Col>*/}
+
+					<Col xs={12} sm={6} md="auto">
+						<Button type="submit" variant="primary">
+							Pesquisar
+						</Button>
+					</Col>
+				</Row>
+			</form>
+		</FormProvider>
+	);
 };
 
 export default CaseFilters;

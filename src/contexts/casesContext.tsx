@@ -3,11 +3,12 @@ import { createContext, useContext, useState, useEffect } from 'react';
 import { all as caseAll } from '@/services/caseServices';
 import { ICase } from '@/types/cases/ICase';
 import { toast } from 'react-toastify';
+import ICaseFilter from '@/types/cases/ICaseFilter';
 
 interface CasesContextType {
 	cases: ICase[];
 	loading: boolean;
-	fetchCases: () => void;
+	fetchCases: (data?: ICaseFilter) => void;
 }
 
 const CasesContext = createContext<CasesContextType | undefined>(undefined);
@@ -24,11 +25,10 @@ export const CasesProvider = ({ children }: { children: React.ReactNode }) => {
 	const [cases, setCases] = useState<ICase[]>([]);
 	const [loading, setLoading] = useState<boolean>(false);
 
-	const fetchCases = async () => {
+	const fetchCases = async (data?: ICaseFilter) => {
 		setLoading(true);
-		console.log('asd')
 		try {
-			const response = await caseAll();
+			const response = await caseAll(data);
 			setCases(response.data);
 		} catch (error) {
 			toast.error("Não foi possível obter os dados");
