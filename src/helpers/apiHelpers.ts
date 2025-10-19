@@ -9,3 +9,8 @@ export async function getAccessToken(): Promise<string> {
 	const token = await getCookie('access_token');
 	return typeof token === 'string' ? token : '';
 }
+
+export async function getUserId(): Promise<string> {
+	const userId = await getCookie('user_id');
+	return typeof userId === 'string' ? userId : '';
+}

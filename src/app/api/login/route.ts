@@ -23,15 +23,15 @@ export async function POST(request: Request) {
 
 		const cookieStore = await cookies();
 
-		const setCookie = (name: string, value: string) => {
+		const setCookie = (name: string, value: string, httpOnly: boolean = false) => {
 			cookieStore.set(name, value, {
-				httpOnly: true,
+				httpOnly: httpOnly,
 				path: '/',
 				maxAge: 60 * 60 * 24 * 7,
 			});
 		};
 
-		setCookie('access_token', response.data.authorization.token);
+		setCookie('access_token', response.data.authorization.token, true);
 		setCookie('user_name', response.data.user.nome);
 		setCookie('user_id', response.data.user.id.toString());
 		setCookie('user_email', data.email);

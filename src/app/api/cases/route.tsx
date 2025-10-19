@@ -15,7 +15,6 @@ export async function GET(request: Request) {
 		const url = new URL(request.url);
 		const params = new URLSearchParams(url.search);
 		const requestData = Object.fromEntries(params.entries());
-
 		const response = await axios.get(`${getBaseApiUrl()}/projeto-memoria`, {
 			headers: {
 				'Content-Type': 'application/json',

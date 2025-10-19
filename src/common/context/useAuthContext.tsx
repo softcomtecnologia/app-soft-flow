@@ -25,12 +25,11 @@ const authSessionKey = 'access_token';
 
 export function AuthProvider({ children }: ChildrenType) {
 	const getSession = (): boolean => {
-		const token = getCookie(authSessionKey);
-		return !!token;
+		return !!getCookie("user_email");;
 	};
 
 	const [user, setUser] = useState<User | undefined>(undefined);
-	const [isAuthenticated, setIsAuthenticated] = useState<boolean>(getSession()); // Inicia com o estado do cookie
+	const [isAuthenticated, setIsAuthenticated] = useState<boolean>(getSession());
 
 	useEffect(() => {
 		const checkAuth = getSession();

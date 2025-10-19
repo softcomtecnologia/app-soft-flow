@@ -4,6 +4,7 @@ import { all as caseAll } from '@/services/caseServices';
 import { ICase } from '@/types/cases/ICase';
 import { toast } from 'react-toastify';
 import ICaseFilter from '@/types/cases/ICaseFilter';
+import Cookies from 'js-cookie';
 
 interface CasesContextType {
 	cases: ICase[];
@@ -26,8 +27,14 @@ export const CasesProvider = ({ children }: { children: React.ReactNode }) => {
 	const [loading, setLoading] = useState<boolean>(false);
 
 	const fetchCases = async (data?: ICaseFilter) => {
+
 		setLoading(true);
+		console.log(document.cookie)
 		try {
+			if (data) {
+				const userId = Cookies.get("user_id");
+				data.AtribuidoPara = userId;
+			}
 			const response = await caseAll(data);
 			setCases(response.data);
 		} catch (error) {
@@ -38,7 +45,7 @@ export const CasesProvider = ({ children }: { children: React.ReactNode }) => {
 	};
 
 	useEffect(() => {
-		fetchCases();
+		fetchCases({AtribuidoPara: Cookies.get("user_id")});
 	}, []);
 
 	return (
