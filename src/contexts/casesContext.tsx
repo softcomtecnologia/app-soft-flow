@@ -1,7 +1,7 @@
 'use client';
 import { createContext, useContext, useState, useEffect } from 'react';
-import { all as caseAll } from '@/services/caseServices';
-import { ICase } from '@/types/cases/ICase';
+import { allCase, findCase } from '@/services/caseServices';
+import { ICase, ICaseEspecifiedResponse } from '@/types/cases/ICase';
 import { toast } from 'react-toastify';
 import ICaseFilter from '@/types/cases/ICaseFilter';
 import Cookies from 'js-cookie';
@@ -10,6 +10,7 @@ interface CasesContextType {
 	cases: ICase[];
 	loading: boolean;
 	fetchCases: (data?: ICaseFilter) => void;
+	fetchEspecifiedCases: (id: string) => Promise<ICaseEspecifiedResponse | undefined>;
 }
 
 const CasesContext = createContext<CasesContextType | undefined>(undefined);
@@ -29,13 +30,12 @@ export const CasesProvider = ({ children }: { children: React.ReactNode }) => {
 	const fetchCases = async (data?: ICaseFilter) => {
 
 		setLoading(true);
-		console.log(document.cookie)
 		try {
-			if (data) {
+			if (!data) {
 				const userId = Cookies.get("user_id");
-				data.AtribuidoPara = userId;
+				data = {usuario_dev_id: userId};
 			}
-			const response = await caseAll(data);
+			const response = await allCase(data);
 			setCases(response.data);
 		} catch (error) {
 			toast.error("Não foi possível obter os dados");
@@ -44,12 +44,24 @@ export const CasesProvider = ({ children }: { children: React.ReactNode }) => {
 		}
 	};
 
+	const fetchEspecifiedCases = async (id: string):Promise<ICaseEspecifiedResponse | undefined> => {
+
+		try {
+			const response = await findCase(id);
+			return response;
+		} catch (error) {
+			toast.error("Não foi possível obter os dados do caso");
+		} finally {
+			setLoading(false);
+		}
+	}
+
 	useEffect(() => {
-		fetchCases({AtribuidoPara: Cookies.get("user_id")});
+		fetchCases({usuario_dev_id: Cookies.get("user_id")});
 	}, []);
 
 	return (
-		<CasesContext.Provider value={{ cases, loading, fetchCases }}>
+		<CasesContext.Provider value={{ cases, loading, fetchCases, fetchEspecifiedCases }}>
 			{children}
 		</CasesContext.Provider>
 	);

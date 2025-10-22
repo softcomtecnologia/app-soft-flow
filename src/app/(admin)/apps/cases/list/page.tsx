@@ -1,12 +1,11 @@
 'use client';
 import PageBreadcrumb from '@/components/PageBreadcrumb';
 import { Card, CardBody, Col, Row, ToastContainer } from 'react-bootstrap';
-import OrderStatus from './caseFilters';
+import CaseFilters from './caseFilters';
 import CasesTable from './cases';
 import Kpis from './kpis';
 import CasesModal from './casesModal';
 import { CasesProvider, useCasesContext } from '@/contexts/casesContext';
-import { FormProvider } from 'react-hook-form';
 
 const CasesList = () => {
 	const { cases, loading } = useCasesContext();
@@ -21,7 +20,7 @@ const CasesList = () => {
 							<div className="mb-3">
 								<Row className="align-items-center g-2">
 									<Col xs={12} lg={8}>
-										<OrderStatus />
+										<CaseFilters />
 									</Col>
 
 									<Col xs={12} lg={4} className="text-lg-end">

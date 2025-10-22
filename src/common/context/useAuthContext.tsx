@@ -25,7 +25,7 @@ const authSessionKey = 'access_token';
 
 export function AuthProvider({ children }: ChildrenType) {
 	const getSession = (): boolean => {
-		return !!getCookie("user_email");;
+		return !!getCookie("user_email");
 	};
 
 	const [user, setUser] = useState<User | undefined>(undefined);

@@ -1,10 +1,24 @@
 import axios, { AxiosResponse } from 'axios';
-import { CaseApiResponse } from '@/types/cases/ICase';
+import { ICaseEspecifiedResponse, ICaseResponse } from '@/types/cases/ICase';
 
-export async function all(data: any): Promise<CaseApiResponse> {
+export async function allCase(data: any): Promise<ICaseResponse> {
 	try {
-		const res: AxiosResponse<CaseApiResponse> = await axios.get('/api/cases', {
+		const res: AxiosResponse<ICaseResponse> = await axios.get('/api/cases', {
 			params: data,
+		});
+		return res.data;
+	} catch (err: unknown) {
+		if (err instanceof Error) {
+			throw new Error(err.message);
+		} else {
+			throw new Error(String(err));
+		}
+	}
+}
+
+export async function findCase(id: string): Promise<ICaseEspecifiedResponse> {
+	try {
+		const res: AxiosResponse<ICaseEspecifiedResponse> = await axios.get(`/api/cases/${id}`, {
 		});
 		return res.data;
 	} catch (err: unknown) {

@@ -1,60 +1,157 @@
 export interface ICase {
-	id_projeto: number;
-	numero_caso: number;
-	usuario: string;
-	di: string; // Data de início
-	df: string; // Data de fim
-	datas: string; // Data relacionada ao caso (talvez de criação ou modificação)
-	produto: string;
-	produto_id: number;
-	descricao_projeto: string;
-	versao_produto: string;
-	prioridade: string;
-	tipo_categoria: string;
-	tipo_estado: string;
-	tipo_resolucao: string;
-	descricao_resumo: string;
-	atribuido_para_nome: string;
-	modulo: string | null;
-	equivalencia: string;
-	bloqueado: boolean;
-	tempo_status: string;
-	status_tempo: string;
-	nao_planejado: boolean;
-	estimado: number;
-	realizado: number;
-	qtd_retorno: number;
-	retorno: number;
-	qtd_testando: number;
-	testando: number;
-	qtd_desenvolvendo: number;
-	desenvolvendo: number;
-	atribuido_para: number;
-	id_origem: number;
-	tipo_origem: string;
-	liberacao: boolean;
-	prazo_conclusao: string | null;
-	relator: number;
-	setor: string;
-	contador_producao: number;
-	realizado_nao_planejado: number;
-	dev_casos_id: number | null;
-	faq_id: number | null;
-	reuso_id: number | null;
-	faq_tempo_medio_caso: number | null;
-	valeu_caso: number;
-	mostrar_teste: boolean;
-	teste_valeu: number | null;
-	teste_faq_id: number | null;
-	status_caso: string;
-	setor_projeto: string;
-	entregue: string | null;
-	passos_para_reproduzir: string | null;
-	tamanho: number;
-	id_usuario_abertura_caso: number;
+	caso: Caso;
+	produto: ProdutoCaso | null;
+	projeto: ProjetoCaso | null;
 }
 
-export interface CaseApiResponse {
-	success: boolean;
+interface Caso {
+	id: number;
+	campos_adicionais: CamposAdicionais;
+	caracteristicas: Caracteristicas;
+	datas: DatasCaso;
+	flags: FlagsCaso;
+	producao: Producao[] | null;
+	quantidades_apontadas: QuantidadesApontadas;
+	relacionamentos: RelacionamentosCaso;
+	status: StatusCaso;
+	tempos: TemposCaso;
+	textos: TextosCaso;
+	usuarios: UsuariosCaso;
+}
+
+interface CamposAdicionais {
+	usuario: string;
+	versao_produto: string;
+	modulo: string | null;
+	equivalencia: string | null;
+	tamanho: number | null;
+	descricao_commit: string | null;
+	liberacao: boolean;
+	mostrar_teste: boolean;
+	passos_para_reproduzir: string;
+	prazo_conclusao: string | null;
+}
+
+interface Caracteristicas {
+	tamanho_pontos: number | null;
+	prioridade: string;
+	tipo_categoria: "BUG" | "MELHORIA" | "TAREFA" | string;
+	modulo: string | null;
+	equivalencia: string | null;
+	id_origem: number;
+	tipo_origem: string | null;
+	versao_produto: string;
+}
+
+interface DatasCaso {
+	abertura: string;
+	conclusao_dev: string | null;
+	conclusao_qa: string | null;
+	prazo_conclusao: string | null;
+}
+
+interface FlagsCaso {
+	bloqueado: boolean;
+	entregue: boolean;
+	liberacao: boolean;
+	mostrar_teste: boolean;
+	nao_planejado: boolean;
+	sinc: boolean;
+}
+
+interface QuantidadesApontadas {
+	retorno: number;
+	testando: number;
+	desenvolvendo: number;
+	producao: number;
+}
+
+interface RelacionamentosCaso {
+	dev_casos_id: number | null;
+	faq_id: number | null;
+	id_caso_pai: number | null;
+	id_origem: number;
+	relator: number;
+	reuso_id: number | null;
+	teste_faq_id: number | null;
+	teste_valeu: number | null;
+	tipo_origem: string | null;
+	valeu_caso: number;
+}
+
+interface StatusCaso {
+	id: string;
+	codigo: string;
+	descricao: string;
+	estado: string;
+	resolucao: string;
+	status_id: string;
+	status_tempo: string;
+	status_tipo: string | null;
+	tempo_status: string;
+}
+
+interface TemposCaso {
+	estimado_minutos: number;
+	realizado_minutos: number;
+	retorno_minutos: number;
+	testando_minutos: number;
+	desenvolvendo_minutos: number;
+	medio_faq_minutos: number | null;
+	nao_planejado_minutos: number;
+	status_tempo: string;
+	tempo_status: string;
+}
+
+interface TextosCaso {
+	descricao_resumo: string;
+	passos_para_reproduzir: string;
+	descricao_commit: string | null;
+}
+
+interface UsuariosCaso {
+	abertura: Usuario;
+	desenvolvimento: Usuario;
+	qa: Usuario;
+}
+
+interface Usuario {
+	id: number | string;
+	nome: string | null;
+}
+
+interface ProdutoCaso {
+	id: number | null;
+	nome?: string | null;
+}
+
+interface ProjetoCaso {
+	id: number | null;
+	descricao?: string | null;
+	datas: {
+		inicial: string | null;
+		final: string | null;
+	};
+}
+
+interface Producao {
+	sequencia: number;
+	registro: number;
+	datas: {
+		abertura: string;
+		producao: string;
+		fechamento: string;
+	};
+	tipo: string;
+	usuario_id: number;
+	projeto_id: number;
+	valeu_usuario_id: number;
+}
+
+export interface ICaseResponse {
 	data: ICase[];
+}
+
+export interface ICaseEspecifiedResponse {
+	data: ICase;
 }

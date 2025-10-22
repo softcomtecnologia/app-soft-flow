@@ -1,4 +1,4 @@
 export default interface ICaseFilter {
 	NumeroCaso?: string,
-	AtribuidoPara?: string
+	usuario_dev_id?: string
 }

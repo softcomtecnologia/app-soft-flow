@@ -41,7 +41,7 @@ export default function CasesHeaderForm({ control }: Props) {
 										getOptionLabel={(e) => e.label}
 										getOptionValue={(e) => e.value}
 										onChange={(selectedOption) => {
-											field.onChange(selectedOption?.value); // Só pega o 'value' para armazenar no formulário
+											field.onChange(selectedOption?.value);
 										}}
 									/>
 								)}
