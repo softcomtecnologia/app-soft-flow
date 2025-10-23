@@ -34,12 +34,14 @@ const Form = <TFormValues extends Record<string, any> = Record<string, any>>({
 
 	useEffect(() => {
 		if (initCallback) {
+			// @ts-expect-error - not
 			initCallback(methods);
 		}
 	}, []);
 
 	return (
 		<FormProvider {...methods}>
+			 {/* @ts-expect-error - not */}
 			<BSForm onSubmit={methods.handleSubmit(onSubmit)} {...props}>
 				{children}
 			</BSForm>

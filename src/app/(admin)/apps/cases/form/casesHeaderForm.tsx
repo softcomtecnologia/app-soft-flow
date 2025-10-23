@@ -30,7 +30,6 @@ export default function CasesHeaderForm({ control }: Props) {
 							<Controller
 								name="product"
 								control={control}
-								defaultValue=""
 								render={({ field }) => (
 									<Select
 										{...field}
@@ -53,7 +52,6 @@ export default function CasesHeaderForm({ control }: Props) {
 							<Controller
 								name="project"
 								control={control}
-								defaultValue=""
 								render={({ field }) => (
 									<Select
 										{...field}
@@ -78,7 +76,6 @@ export default function CasesHeaderForm({ control }: Props) {
 							<Controller
 								name="version"
 								control={control}
-								defaultValue=""
 								render={({ field }) => (
 									<Select
 										{...field}
@@ -101,7 +98,6 @@ export default function CasesHeaderForm({ control }: Props) {
 							<Controller
 								name="category"
 								control={control}
-								defaultValue=""
 								render={({ field }) => (
 									<Select
 										{...field}

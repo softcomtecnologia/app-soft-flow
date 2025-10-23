@@ -31,7 +31,6 @@ export default function useLogin() {
 		try {
 			const res: AxiosResponse<User> = await authApi.login(values);
 			if (res.data.token) {
-				saveSession({ ...(res.data ?? {}), token: res.data.token });
 				navigate.push(queryParams['redirectTo'] ?? '/dashboards/analytics');
 			}
 		} catch (error: any) {
