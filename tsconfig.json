@@ -19,10 +19,10 @@
       }
     ],
 
-    // 👇 adicione esta linha:
+    // 👇 Caminho base para os imports relativos
     "baseUrl": "src",
 
-    // e mantenha seu alias
+    // 👇 Alias para "@/..."
     "paths": {
       "@/*": ["*"]
     }
@@ -32,7 +32,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "next.config.mjs"
+    "src/types/**/*.d.ts" // 👈 adiciona o diretório onde você vai declarar tipos para imagens
   ],
   "exclude": ["node_modules"]
 }
