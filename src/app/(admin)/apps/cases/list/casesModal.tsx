@@ -1,9 +1,8 @@
 "use client";
 
 import { useModal } from "@/app/(admin)/ui/base-ui/hooks";
-import { Row, Col, Card, Button, Modal, Form, Table } from "react-bootstrap";
+import {Button, Modal} from "react-bootstrap";
 import { useForm } from "react-hook-form";
-import { Wizard } from "react-use-wizard";
 import CaseWizard from "../form/wizard/caseWizard";
 
 export default function CasesModal() {

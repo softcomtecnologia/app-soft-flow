@@ -52,9 +52,8 @@ const CasesTable = ({ data, loading }: Props) => {
 			{loading ? (
 				<ListSkelleton rows={10} />
 			) : (data || []).length ? (
-				(data || []).map((c) => (
-
-					<tr key={c.caso.id}>
+				(data || []).map((c, index) => (
+					<tr key={`${c.caso.id}-${index}`}>
 						<td>
 							<form>
 								<FormCheck type="checkbox" id={`${c.caso.id}`} />
