@@ -12,9 +12,9 @@ const BottomLink = () => {
 		<Row className="mt-3">
 			<Col className="text-center">
 				<p className="text-muted">
-					{t('Back to ')}
+					{t('De volta para o ')}
 					<Link href={'/account/login'} className="text-muted ms-1">
-						<b>{t('Log In')}</b>
+						<b>{t('Login')}</b>
 					</Link>
 				</p>
 			</Col>
@@ -27,8 +27,8 @@ const LogoutPage = () => {
 	return (
 		<AccountWrapper bottomLinks={<BottomLink />}>
 			<div className="text-center w-75 m-auto">
-				<h4 className="text-dark-50 text-center mt-0 fw-bold">{t('See You Again !')}</h4>
-				<p className="text-muted mb-4">{t('You are now successfully sign out.')}</p>
+				<h4 className="text-dark-50 text-center mt-0 fw-bold">{t('Vejo você de novo!')}</h4>
+				<p className="text-muted mb-4">{t('Você foi deslogado com sucesso!')}</p>
 
 				<div className="logout-icon m-auto">
 					<svg

@@ -20,7 +20,7 @@ type TypeVariant = {
 
 function Toastr({ show, title, message, onClose, variant = 'light', delay = 5000 }: ToastrProps) {
 	return (
-		<ToastContainer className="p-3" position="top-end">
+		<ToastContainer className="p-3" position="top-center">
 			<Toast bg={variant.toLowerCase()} delay={delay} show={show} onClose={onClose} autohide>
 				{title && (
 					<Toast.Header className={`text-${variant}`}>

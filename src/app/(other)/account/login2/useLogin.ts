@@ -26,12 +26,12 @@ export default function useLogin() {
 		setLoading(true);
 		try {
 			const res: AxiosResponse<User> = await authApi.login(values);
-			showNotification({message: "Usuário logado com sucesso"});
+			showNotification({message: "Usuário logado com sucesso", type: 'success'});
 			saveSession(true);
 			navigate.push('/apps/cases/list');
 		} catch (error: any) {
 			saveSession(true);
-			showNotification({ message: error.toString(), type: 'error' });
+			showNotification({ message: "Usuário inválido", type: 'error' });
 		} finally {
 			setLoading(false);
 		}
