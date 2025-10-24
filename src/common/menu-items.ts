@@ -13,7 +13,38 @@ export type MenuItemType = {
     children?: MenuItemType[];
 };
 
-const MENU_ITEMS: MenuItemType[] = [
+type AppEnvironment = 'development' | 'preview' | 'production';
+
+const currentEnv = (process.env.NEXT_PUBLIC_VERCEL_ENV ?? process.env.NODE_ENV ?? 'development') as AppEnvironment | string;
+const isProductionEnv = currentEnv === 'production';
+
+const PRODUCTION_SIDEBAR_VISIBLE_KEYS = new Set<string>(['apps-cases', 'cases-list']);
+const PRODUCTION_HORIZONTAL_VISIBLE_KEYS = new Set<string>(['apps-cases', 'cases']);
+
+const filterMenuItemsByVisibleKeys = (items: MenuItemType[], visibleKeys: Set<string>): MenuItemType[] => {
+    const filteredItems: MenuItemType[] = [];
+
+    for (const item of items) {
+        const filteredChildren = item.children ? filterMenuItemsByVisibleKeys(item.children, visibleKeys) : undefined;
+        const hasVisibleChildren = Array.isArray(filteredChildren) && filteredChildren.length > 0;
+        const isDirectlyVisible = visibleKeys.has(item.key);
+
+        if (isDirectlyVisible || hasVisibleChildren) {
+            filteredItems.push(
+                filteredChildren
+                    ? {
+                          ...item,
+                          children: filteredChildren,
+                      }
+                    : { ...item }
+            );
+        }
+    }
+
+    return filteredItems;
+};
+
+const MENU_ITEMS_BASE: MenuItemType[] = [
     {
         key: 'navigation',
         label: 'Navigation',
@@ -1057,7 +1088,7 @@ const MENU_ITEMS: MenuItemType[] = [
     },
 ];
 
-const HORIZONTAL_MENU_ITEMS: MenuItemType[] = [
+const HORIZONTAL_MENU_ITEMS_BASE: MenuItemType[] = [
     {
         key: 'dashboards',
         icon: 'uil-dashboard',
@@ -2035,5 +2066,10 @@ const HORIZONTAL_MENU_ITEMS: MenuItemType[] = [
         ],
     },
 ];
+
+const MENU_ITEMS = isProductionEnv ? filterMenuItemsByVisibleKeys(MENU_ITEMS_BASE, PRODUCTION_SIDEBAR_VISIBLE_KEYS) : MENU_ITEMS_BASE;
+const HORIZONTAL_MENU_ITEMS = isProductionEnv
+    ? filterMenuItemsByVisibleKeys(HORIZONTAL_MENU_ITEMS_BASE, PRODUCTION_HORIZONTAL_VISIBLE_KEYS)
+    : HORIZONTAL_MENU_ITEMS_BASE;
 
 export {MENU_ITEMS, HORIZONTAL_MENU_ITEMS};

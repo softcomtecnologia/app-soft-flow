@@ -3,7 +3,6 @@ import { authApi } from '@/common/api';
 import { useNotificationContext } from '@/common/context';
 import { useState } from 'react';
 import { useAuthContext } from '@/common/context/useAuthContext';
-import { useQuery } from '@/hooks';
 import type { User } from '@/types/User';
 import { AxiosResponse } from 'axios';
 import { useRouter } from 'next/navigation';
@@ -32,7 +31,6 @@ export default function useLogin() {
 			navigate.push('/apps/cases/list');
 		} catch (error: any) {
 			saveSession(true);
-			navigate.push('/dashboards/analytics');
 			showNotification({ message: error.toString(), type: 'error' });
 		} finally {
 			setLoading(false);
