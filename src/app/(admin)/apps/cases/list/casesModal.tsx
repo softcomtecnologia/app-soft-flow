@@ -16,13 +16,14 @@ export default function CasesModal() {
 
     return (
         <>
-            <Button
-                variant="primary"
-                className="w-auto"
-                onClick={() => openModalWithClass("modal-full-width")}
-            >
-                <i className="mdi mdi-plus me-1"></i> Adicionar Novo Caso
-            </Button>
+            <div className="d-grid gap-2 d-sm-flex justify-content-sm-end w-100">
+                <Button
+                    variant="primary"
+                    onClick={() => openModalWithClass("modal-full-width")}
+                >
+                    <i className="mdi mdi-plus me-1"></i> Adicionar Novo Caso
+                </Button>
+            </div>
 
             <Modal
                 show={isOpen}

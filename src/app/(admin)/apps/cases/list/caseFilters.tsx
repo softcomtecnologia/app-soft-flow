@@ -20,16 +20,16 @@ const CaseFilters = () => {
 			<form onSubmit={methods.handleSubmit(onSearch)}>
 				<Row className="gy-3 gx-3 align-items-end">
 					<Col xs={12} sm={6} md="auto">
-						<Form.Label className="fw-medium text-muted small">Número do caso</Form.Label>
+						<Form.Label className="fw-medium text-muted small">Numero do caso</Form.Label>
 						<TextInput
 							{...methods.register('NumeroCaso')}
 							type="text"
 							name="NumeroCaso"
-							placeholder="Digite o número..."
+							placeholder="Digite o numero..."
 							className="form-control-sm"
 						/>
 					</Col>
-					<Col xs={12} sm={6} md="auto">
+					<Col xs={12} sm="auto" className="d-grid gap-2 d-sm-inline-flex">
 						<Button type="submit" variant="primary">
 							Pesquisar
 						</Button>
@@ -41,3 +41,4 @@ const CaseFilters = () => {
 };
 
 export default CaseFilters;
+
