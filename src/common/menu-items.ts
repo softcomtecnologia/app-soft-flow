@@ -18,7 +18,7 @@ type AppEnvironment = 'development' | 'preview' | 'production';
 const currentEnv = (process.env.NEXT_PUBLIC_VERCEL_ENV ?? process.env.NODE_ENV ?? 'development') as AppEnvironment | string;
 const isProductionEnv = currentEnv === 'production';
 
-const PRODUCTION_SIDEBAR_VISIBLE_KEYS = new Set<string>(['apps-cases', 'cases-list']);
+const PRODUCTION_SIDEBAR_VISIBLE_KEYS = new Set<string>(['navigation', 'apps-cases', 'cases-list']);
 const PRODUCTION_HORIZONTAL_VISIBLE_KEYS = new Set<string>(['apps-cases', 'cases']);
 
 const filterMenuItemsByVisibleKeys = (items: MenuItemType[], visibleKeys: Set<string>): MenuItemType[] => {
@@ -47,7 +47,7 @@ const filterMenuItemsByVisibleKeys = (items: MenuItemType[], visibleKeys: Set<st
 const MENU_ITEMS_BASE: MenuItemType[] = [
     {
         key: 'navigation',
-        label: 'Navigation',
+        label: 'Navegação',
         isTitle: true,
     },
     {
