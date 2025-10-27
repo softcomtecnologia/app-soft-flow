@@ -13,7 +13,6 @@ import userImage from '@/assets/images/users/avatar-1.jpg';
 import logo from '@/assets/images/logo.png';
 import logoDark from '@/assets/images/logo-dark.png';
 import logoSm from '@/assets/images/logo-sm.png';
-import logoDarkSm from '@/assets/images/logo-dark-sm.png';
 import {ThemeSettings, useThemeContext} from '@/common';
 import useThemeCustomizer from '@/components/ThemeCustomizer/useThemeCustomizer';
 import {useViewport} from '@/hooks';
@@ -115,7 +114,7 @@ const Topbar = ({topbarDark, toggleMenu, navOpen}: TopbarProps) => {
 								<Image src={topbarDark ? logo : logoDark} alt="logo"/>
 							</span>
                             <span className="logo-sm">
-								<Image src={topbarDark ? logoSm : logoDarkSm} alt="small logo"/>
+								<Image src={logoSm} alt="small logo"/>
 							</span>
                         </Link>
                     </div>
