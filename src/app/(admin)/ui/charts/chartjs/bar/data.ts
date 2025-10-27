@@ -1,7 +1,7 @@
 import { type ChartConfiguration } from 'chart.js/auto';
 import { hexToRGB } from '@/utils';
 
-const colors = ['#727cf5', '#0acf97'];
+const colors = ['#f59e0b', '#0acf97'];
 export const borderRadiusConfig: ChartConfiguration = {
 	type: 'bar',
 	data: {

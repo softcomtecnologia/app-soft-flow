@@ -34,7 +34,7 @@ const BrowsersChart = () => {
 				},
 			},
 		},
-		colors: ['#727cf5'],
+		colors: ['#f59e0b'],
 		yaxis: {
 			labels: {
 				formatter: function (val) {
@@ -48,7 +48,7 @@ const BrowsersChart = () => {
 		markers: {
 			size: 4,
 			colors: ['#fff'],
-			strokeColors: ['#727cf5'],
+			strokeColors: ['#f59e0b'],
 			strokeWidth: 2,
 		},
 	};

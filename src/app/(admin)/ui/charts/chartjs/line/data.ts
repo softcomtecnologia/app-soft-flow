@@ -1,7 +1,7 @@
 import { ScriptableLineSegmentContext, type ChartConfiguration } from 'chart.js/auto';
 import { hexToRGB } from '@/utils';
 
-const colors = ['#727cf5', '#0acf97'];
+const colors = ['#f59e0b', '#0acf97'];
 const datapoints = [0, 20, 20, 60, 60, 120, NaN, 180, 120, 125, 105, 110, 170];
 
 function skipped(ctx: ScriptableLineSegmentContext, value: any) {

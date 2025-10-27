@@ -47,14 +47,14 @@ const AllVectorMaps = () => {
         markerStyle: {
             initial: {
                 r: 9,
-                fill: '#727cf5',
+                fill: '#f59e0b',
                 'fill-opacity': 0.9,
                 stroke: '#fff',
                 'stroke-width': 7,
                 'stroke-opacity': 0.4,
             },
             hover: {
-                fill: '#727cf5',
+                fill: '#f59e0b',
                 stroke: '#fff',
                 'fill-opacity': 1,
                 'stroke-width': 1.5,
@@ -86,7 +86,7 @@ const AllVectorMaps = () => {
                                     zoomOnScroll: false,
                                     regionStyle: {
                                         initial: {
-                                            fill: '#727cf5',
+                                            fill: '#f59e0b',
                                         },
                                     },
                                 }}

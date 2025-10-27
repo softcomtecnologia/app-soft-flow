@@ -4,14 +4,32 @@
 
 // Logo Height
 .logo-lg {
-    img {
-        height: $logo-lg-height;
+    display: inline-flex;
+    align-items: center;
+
+    img,
+    .sidebar-logo-img {
+        display: block;
+        height: auto;
+        max-height: $logo-lg-height;
+        width: auto;
+        max-width: 100%;
+        object-fit: contain;
     }
 }
 
 .logo-sm {
-    img {
-        height: $logo-sm-height;
+    display: inline-flex;
+    align-items: center;
+
+    img,
+    .sidebar-logo-img-sm {
+        display: block;
+        height: auto;
+        max-height: $logo-sm-height;
+        width: auto;
+        max-width: 100%;
+        object-fit: contain;
     }
 }
 

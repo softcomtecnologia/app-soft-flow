@@ -40,7 +40,7 @@ const AllAreaCharts = () => {
 							<h4 className="header-title mb-4">Boundaries</h4>
 							<div dir="ltr">
 								<div className="mt-3 chartjs-chart" style={{ height: 320 }}>
-									<canvas id="boundaries-example" data-colors="#727cf5,#0acf97" />
+									<canvas id="boundaries-example" data-colors="#f59e0b,#0acf97" />
 								</div>
 							</div>
 						</Card.Body>
@@ -52,7 +52,7 @@ const AllAreaCharts = () => {
 							<h4 className="header-title mb-4">Different Dataset</h4>
 							<div dir="ltr">
 								<div className="mt-3 chartjs-chart" style={{ height: 320 }}>
-									<canvas id="dataset-example" data-colors="#727cf5,#fa5c7c,#0acf97,#ebeff2, #f56f36" />
+									<canvas id="dataset-example" data-colors="#f59e0b,#fa5c7c,#0acf97,#ebeff2, #f56f36" />
 								</div>
 							</div>
 						</Card.Body>
@@ -67,7 +67,7 @@ const AllAreaCharts = () => {
 							<h4 className="header-title mb-4">Draw Time</h4>
 							<div dir="ltr">
 								<div className="mt-3 chartjs-chart" style={{ height: 320 }}>
-									<canvas id="draw-time-example" data-colors="#727cf5,#0acf97" />
+									<canvas id="draw-time-example" data-colors="#f59e0b,#0acf97" />
 								</div>
 							</div>
 						</Card.Body>
@@ -79,7 +79,7 @@ const AllAreaCharts = () => {
 							<h4 className="header-title mb-4">Stacked</h4>
 							<div dir="ltr">
 								<div className="mt-3 chartjs-chart" style={{ height: 320 }}>
-									<canvas id="stacked-example" data-colors="#727cf5,#fa5c7c,#0acf97,#ebeff2, #f56f36" />
+									<canvas id="stacked-example" data-colors="#f59e0b,#fa5c7c,#0acf97,#ebeff2, #f56f36" />
 								</div>
 							</div>
 						</Card.Body>
@@ -94,7 +94,7 @@ const AllAreaCharts = () => {
 							<h4 className="header-title mb-4">Radar</h4>
 							<div dir="ltr">
 								<div className="mt-3 chartjs-chart" style={{ height: 320 }}>
-									<canvas id="radar-example" data-colors="#727cf5,#fa5c7c,#0acf97,#ebeff2, #f56f36" />
+									<canvas id="radar-example" data-colors="#f59e0b,#fa5c7c,#0acf97,#ebeff2, #f56f36" />
 								</div>
 							</div>
 						</Card.Body>

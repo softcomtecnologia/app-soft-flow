@@ -14,7 +14,7 @@ const Statistics = () => {
 					currencyType="BTC"
 					currencyAmount="$48,781.20"
 					chartType="line"
-					colors={['#727cf5']}
+					colors={['#f59e0b']}
 					data={[25, 33, 28, 35, 30, 40]}
 					strokeWidth={2}
 				/>
@@ -27,7 +27,7 @@ const Statistics = () => {
 					currencyType="CNY"
 					currencyAmount="$0.6"
 					chartType="bar"
-					colors={['#727cf5']}
+					colors={['#f59e0b']}
 					data={[25, 44, 12, 36, 9, 54, 25, 66, 41, 89, 63]}
 					strokeWidth={0}
 				/>
@@ -40,7 +40,7 @@ const Statistics = () => {
 					currencyType="ETH"
 					currencyAmount="$3,783.68"
 					chartType="line"
-					colors={['#727cf5']}
+					colors={['#f59e0b']}
 					data={[25, 33, 28, 35, 30, 40]}
 					strokeWidth={2}
 				/>

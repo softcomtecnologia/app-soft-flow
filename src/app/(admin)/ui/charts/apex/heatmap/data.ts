@@ -24,7 +24,7 @@ export const BasicHeatmapOps: ApexOptions = {
 	dataLabels: {
 		enabled: false,
 	},
-	colors: ['#727cf5'],
+	colors: ['#f59e0b'],
 	series: [
 		{
 			name: 'Metric 1',

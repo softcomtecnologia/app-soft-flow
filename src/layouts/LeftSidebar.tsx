@@ -69,10 +69,10 @@ const LeftSidebar = ({isCondensed, leftbarDark}: LeftSidebarProps) => {
         <div className="leftside-menu" ref={menuNodeRef}>
             <Link href="/" className={`logo ${leftbarDark ? 'logo-light' : 'logo-dark'}`}>
 				<span className="logo-lg">
-					<Image src={leftbarDark ? logo : logoDark} alt="logo" height={50}/>
+					<Image src={leftbarDark ? logo : logoDark} alt="logo" className="sidebar-logo-img"/>
 				</span>
                 <span className="logo-sm">
-					<Image src={leftbarDark ? logoSm : logoDarkSm} alt="logo" height={50}/>
+					<Image src={leftbarDark ? logoSm : logoDarkSm} alt="logo" className="sidebar-logo-img-sm"/>
 				</span>
             </Link>
 

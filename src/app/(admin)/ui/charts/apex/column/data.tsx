@@ -23,7 +23,7 @@ const BasicColumnOps: ApexOptions = {
 		width: 2,
 		colors: ['transparent'],
 	},
-	colors: ['#727cf5', '#0acf97', '#fa5c7c'],
+	colors: ['#f59e0b', '#0acf97', '#fa5c7c'],
 	series: [
 		{
 			name: 'Net Profit',
@@ -98,7 +98,7 @@ const ColumnWithDataTableOps: ApexOptions = {
 			colors: ['#304758'],
 		},
 	},
-	colors: ['#727cf5'],
+	colors: ['#f59e0b'],
 	legend: {
 		show: true,
 		horizontalAlign: 'center',
@@ -403,7 +403,7 @@ const ColumnwithMarkersOps: ApexOptions = {
 			columnWidth: '60%',
 		},
 	},
-	colors: ['#727cf5', '#ffbc00'],
+	colors: ['#f59e0b', '#ffbc00'],
 	dataLabels: {
 		enabled: false,
 	},
@@ -412,7 +412,7 @@ const ColumnwithMarkersOps: ApexOptions = {
 		showForSingleSeries: true,
 		customLegendItems: ['Actual', 'Expected'],
 		markers: {
-			fillColors: ['#727cf5', '#ffbc00'],
+			fillColors: ['#f59e0b', '#ffbc00'],
 		},
 	},
 };
@@ -627,7 +627,7 @@ const ColumnwithnegativevalueOps: ApexOptions = {
 	dataLabels: {
 		enabled: false,
 	},
-	colors: ['#727cf5'],
+	colors: ['#f59e0b'],
 	series: [
 		{
 			name: 'Cash Flow',
@@ -711,7 +711,7 @@ const DistributedColumnOps: ApexOptions = {
 			},
 		},
 	},
-	colors: ['#727cf5', '#6c757d', '#0acf97', '#fa5c7c', '#ffbc00', '#39afd1', '#e3eaef', '#313a46'],
+	colors: ['#f59e0b', '#6c757d', '#0acf97', '#fa5c7c', '#ffbc00', '#39afd1', '#e3eaef', '#313a46'],
 	plotOptions: {
 		bar: {
 			columnWidth: '45%',

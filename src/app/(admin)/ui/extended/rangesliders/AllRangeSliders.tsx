@@ -35,7 +35,7 @@ const AllRangeSliders = () => {
                                             width: "100%",
                                             background: getTrackBackground({
                                                 values: singleValue,
-                                                colors: ["#727cf5", "#ccc"],
+                                                colors: ["#f59e0b", "#ccc"],
                                                 min: 0,
                                                 max: 100
                                             })
@@ -52,7 +52,7 @@ const AllRangeSliders = () => {
                                             ...props.style,
                                             height: "20px",
                                             width: "20px",
-                                            backgroundColor: "#727cf5",
+                                            backgroundColor: "#f59e0b",
                                             borderRadius: "50%"
                                         }}
                                     />
@@ -85,7 +85,7 @@ const AllRangeSliders = () => {
                                             width: "100%",
                                             background: getTrackBackground({
                                                 values: rangeValue,
-                                                colors: ["#ccc", "#727cf5", "#ccc"],
+                                                colors: ["#ccc", "#f59e0b", "#ccc"],
                                                 min: 0,
                                                 max: 100
                                             })
@@ -102,7 +102,7 @@ const AllRangeSliders = () => {
                                             ...props.style,
                                             height: "20px",
                                             width: "20px",
-                                            backgroundColor: "#727cf5",
+                                            backgroundColor: "#f59e0b",
                                             borderRadius: "50%"
                                         }}
                                     />
@@ -137,7 +137,7 @@ const AllRangeSliders = () => {
                                             width: "100%",
                                             background: getTrackBackground({
                                                 values: stepValue,
-                                                colors: ["#727cf5", "#ccc"],
+                                                colors: ["#f59e0b", "#ccc"],
                                                 min: 0,
                                                 max: 100
                                             })
@@ -154,7 +154,7 @@ const AllRangeSliders = () => {
                                             ...props.style,
                                             height: "20px",
                                             width: "20px",
-                                            backgroundColor: "#727cf5",
+                                            backgroundColor: "#f59e0b",
                                             borderRadius: "50%"
                                         }}
                                     />
@@ -189,7 +189,7 @@ const AllRangeSliders = () => {
                                             width: "100%",
                                             background: getTrackBackground({
                                                 values: multiRangeValue,
-                                                colors: ["#ccc", "#727cf5", "#ccc", "#727cf5", "#ccc"],
+                                                colors: ["#ccc", "#f59e0b", "#ccc", "#f59e0b", "#ccc"],
                                                 min: 0,
                                                 max: 100
                                             })
@@ -206,7 +206,7 @@ const AllRangeSliders = () => {
                                             ...props.style,
                                             height: "20px",
                                             width: "20px",
-                                            backgroundColor: "#727cf5",
+                                            backgroundColor: "#f59e0b",
                                             borderRadius: "50%"
                                         }}
                                     />

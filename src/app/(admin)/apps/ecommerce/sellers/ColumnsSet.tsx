@@ -20,7 +20,7 @@ const options: ApexOptions = {
 	markers: {
 		size: 0,
 	},
-	colors: ['#727cf5'],
+	colors: ['#f59e0b'],
 	tooltip: {
 		fixed: {
 			enabled: false,

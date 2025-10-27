@@ -69,7 +69,7 @@ export const SimpleBubbleChartOps: ApexOptions = {
 			// enabled: false
 		},
 	},
-	colors: ['#727cf5', '#ffbc00', '#fa5c7c'],
+	colors: ['#f59e0b', '#ffbc00', '#fa5c7c'],
 	xaxis: {
 		tickAmount: 12,
 		type: 'category',

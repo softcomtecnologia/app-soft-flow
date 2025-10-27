@@ -43,7 +43,7 @@ const RevenueChart = () => {
 		legend: {
 			show: false,
 		},
-		colors: ['#727cf5', '#0acf97', '#fa5c7c', '#ffbc00'],
+		colors: ['#f59e0b', '#0acf97', '#fa5c7c', '#ffbc00'],
 		xaxis: {
 			categories: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
 			tooltip: {

@@ -42,7 +42,7 @@ const OsChart = () => {
 				},
 			},
 		},
-		colors: ['#727cf5', '#0acf97', '#fa5c7c', '#ffbc00'],
+		colors: ['#f59e0b', '#0acf97', '#fa5c7c', '#ffbc00'],
 		labels: ['Windows', 'Macintosh', 'Linux', 'Android'],
 	};
 

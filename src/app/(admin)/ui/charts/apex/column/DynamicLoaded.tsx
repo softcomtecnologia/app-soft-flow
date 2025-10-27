@@ -154,7 +154,7 @@ const DynamicLoaded = () => {
 				{
 					x: '2011',
 					y: dataSet[0].y,
-					color: '#727cf5',
+					color: '#f59e0b',
 					quarters: dataSet[0].quarters,
 				},
 				{
@@ -292,7 +292,7 @@ const DynamicLoaded = () => {
 				},
 			},
 
-			colors: ['#727cf5', '#6c757d', '#0acf97', '#fa5c7c', '#ffbc00', '#39afd1'],
+			colors: ['#f59e0b', '#6c757d', '#0acf97', '#fa5c7c', '#ffbc00', '#39afd1'],
 
 			states: {
 				normal: {

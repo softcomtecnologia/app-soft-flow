@@ -40,7 +40,7 @@ const lineColumnChartOpts: ApexOptions = {
 	xaxis: {
 		type: 'datetime',
 	},
-	colors: ['#727cf5', '#0acf97'],
+	colors: ['#f59e0b', '#0acf97'],
 	yaxis: [
 		{
 			title: {
@@ -97,7 +97,7 @@ const multipleYAxisChartOpts: ApexOptions = {
 			data: [20, 29, 37, 36, 44, 45, 50, 58],
 		},
 	],
-	colors: ['#727cf5', '#39afd1', '#fa5c7c'],
+	colors: ['#f59e0b', '#39afd1', '#fa5c7c'],
 	xaxis: {
 		categories: [2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016],
 	},
@@ -291,7 +291,7 @@ const lineColumnAreaChartOpts: ApexOptions = {
 			columnWidth: '50%',
 		},
 	},
-	colors: ['#727cf5', '#39afd1', '#fa5c7c'],
+	colors: ['#f59e0b', '#39afd1', '#fa5c7c'],
 	series: [
 		{
 			name: 'Team A',

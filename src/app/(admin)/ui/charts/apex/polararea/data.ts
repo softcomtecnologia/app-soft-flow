@@ -16,7 +16,7 @@ export const BasicPolarAreaOpt: ApexOptions = {
 	legend: {
 		position: 'bottom',
 	},
-	colors: ['#727cf5', '#6c757d', '#0acf97', '#fa5c7c', '#ffbc00', '#39afd1'],
+	colors: ['#f59e0b', '#6c757d', '#0acf97', '#fa5c7c', '#ffbc00', '#39afd1'],
 	responsive: [
 		{
 			breakpoint: 480,
@@ -65,7 +65,7 @@ export const MonochromePolarAreaOpt: ApexOptions = {
 		monochrome: {
 			enabled: true,
 			shadeTo: 'light',
-			color: '#727cf5',
+			color: '#f59e0b',
 			shadeIntensity: 0.6,
 		},
 	},

@@ -168,7 +168,7 @@ export const Chart1Opt: ApexOptions = {
 	markers: {
 		size: 0,
 	},
-	colors: ['#727cf5'],
+	colors: ['#f59e0b'],
 	tooltip: {
 		fixed: {
 			enabled: false,
@@ -326,7 +326,7 @@ export const Chart5Opt: ApexOptions = {
 			columnWidth: '80%',
 		},
 	},
-	colors: ['#727cf5'],
+	colors: ['#f59e0b'],
 	series: [
 		{
 			data: [25, 66, 41, 89, 63, 25, 44, 12, 36, 9, 54],

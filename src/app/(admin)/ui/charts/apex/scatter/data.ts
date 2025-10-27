@@ -142,7 +142,7 @@ export const ScatterXYOpt: ApexOptions = {
 	yaxis: {
 		tickAmount: 7,
 	},
-	colors: ['#39afd1', '#ffbc00', '#727cf5'],
+	colors: ['#39afd1', '#ffbc00', '#f59e0b'],
 	grid: {
 		borderColor: '#f1f3fa',
 		padding: {
@@ -217,7 +217,7 @@ export const DatetimeOpt: ApexOptions = {
 	dataLabels: {
 		enabled: false,
 	},
-	colors: ['#6c757d', '#ffbc00', '#727cf5', '#0acf97', '#fa5c7c'],
+	colors: ['#6c757d', '#ffbc00', '#f59e0b', '#0acf97', '#fa5c7c'],
 	grid: {
 		borderColor: '#f1f3fa',
 		padding: {

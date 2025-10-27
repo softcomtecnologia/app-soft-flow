@@ -110,7 +110,7 @@ const CasesTable = ({ data, loading }: Props) => {
                             <th>Prioridade</th>
                             <th>Descricao / Resumo</th>
                             <th>Status</th>
-                            <th style={{ width: '125px' }}>Acoes</th>
+                            <th style={{ width: '125px' }}>Ações</th>
                         </tr>
                     </thead>
 

@@ -9,8 +9,8 @@ export const boundariesConfig: ChartConfiguration = {
 			{
 				label: 'Fully Rounded',
 				data: [12.5, -19.4, 14.3, -15.0, 10.8, -10.5],
-				borderColor: ['#727cf5'],
-				backgroundColor: hexToRGB('#727cf5', 0.3),
+				borderColor: ['#f59e0b'],
+				backgroundColor: hexToRGB('#f59e0b', 0.3),
 				fill: false,
 			},
 		],
@@ -39,7 +39,7 @@ export const boundariesConfig: ChartConfiguration = {
 	},
 };
 
-const datasetColors = ['#727cf5', '#fa5c7c', '#0acf97', '#ebeff2', '#f56f36'];
+const datasetColors = ['#f59e0b', '#fa5c7c', '#0acf97', '#ebeff2', '#f56f36'];
 export const datasetConfig: ChartConfiguration = {
 	type: 'line',
 	data: {
@@ -110,7 +110,7 @@ export const datasetConfig: ChartConfiguration = {
 	},
 };
 
-const drawTimeColors = ['#727cf5', '#0acf97'];
+const drawTimeColors = ['#f59e0b', '#0acf97'];
 export const drawTimeConfig: ChartConfiguration = {
 	type: 'line',
 	data: {
@@ -165,7 +165,7 @@ export const drawTimeConfig: ChartConfiguration = {
 	},
 };
 
-const stackedColors = ['#727cf5', '#fa5c7c', '#0acf97', '#ebeff2', ' #f56f36'];
+const stackedColors = ['#f59e0b', '#fa5c7c', '#0acf97', '#ebeff2', ' #f56f36'];
 export const stackedConfig: ChartConfiguration = {
 	type: 'line',
 	data: {
@@ -245,7 +245,7 @@ export const stackedConfig: ChartConfiguration = {
 	},
 };
 
-const radarColors = ['#727cf5', '#fa5c7c', '#0acf97', '#ebeff2', '#f56f36'];
+const radarColors = ['#f59e0b', '#fa5c7c', '#0acf97', '#ebeff2', '#f56f36'];
 export const radarConfig: ChartConfiguration = {
 	type: 'radar',
 	data: {

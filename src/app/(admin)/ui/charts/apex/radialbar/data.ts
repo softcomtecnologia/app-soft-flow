@@ -38,7 +38,7 @@ export const MultipleRadialBarsOpt: ApexOptions = {
 			},
 		},
 	},
-	colors: ['#6c757d', '#ffbc00', '#727cf5', '#0acf97'],
+	colors: ['#6c757d', '#ffbc00', '#f59e0b', '#0acf97'],
 	series: [44, 55, 67, 83],
 	labels: ['Apples', 'Oranges', 'Bananas', 'Berries'],
 	responsive: [
@@ -82,7 +82,7 @@ export const CustomAngleopt: ApexOptions = {
 			},
 		},
 	},
-	colors: ['#0acf97', '#727cf5', '#fa5c7c', '#ffbc00'],
+	colors: ['#0acf97', '#f59e0b', '#fa5c7c', '#ffbc00'],
 	series: [76, 67, 61, 90],
 	labels: ['Vimeo', 'Messenger', 'Facebook', 'LinkedIn'],
 	legend: {
@@ -193,7 +193,7 @@ export const StrokedCircularGuageOpt: ApexOptions = {
 	stroke: {
 		dashArray: 4,
 	},
-	colors: ['#727cf5'],
+	colors: ['#f59e0b'],
 	series: [67],
 	labels: ['Median Ratio'],
 	responsive: [

@@ -1,7 +1,7 @@
 import { ApexOptions } from 'apexcharts';
 import moment from 'moment';
 
-const colors = ['#727cf5', '#0acf97', '#fa5c7c', '#6c757d', '#39afd1'];
+const colors = ['#f59e0b', '#0acf97', '#fa5c7c', '#6c757d', '#39afd1'];
 
 export const BasicTimelineOps: ApexOptions = {
 	series: [

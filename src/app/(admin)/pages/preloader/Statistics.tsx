@@ -15,7 +15,7 @@ const Statistics = () => {
 						icon: 'mdi mdi-arrow-up-bold',
 						value: '3.27%',
 					}}
-					colors={['#727cf5']}
+					colors={['#f59e0b']}
 					data={[25, 66, 41, 89, 63, 25, 44, 12, 36, 9, 54]}
 				></StatisticsChartWidget>
 			</Col>
@@ -44,7 +44,7 @@ const Statistics = () => {
 						icon: 'mdi mdi-arrow-up-bold',
 						value: '4.87%',
 					}}
-					colors={['#727cf5']}
+					colors={['#f59e0b']}
 					data={[12, 14, 2, 47, 42, 15, 47, 75, 65, 19, 14]}
 				></StatisticsChartWidget>
 			</Col>

@@ -17,7 +17,7 @@ const CampaignsChart = () => {
 			height: 320,
 			type: 'radialBar',
 		},
-		colors: ['#ffbc00', '#727cf5', '#0acf97'],
+		colors: ['#ffbc00', '#f59e0b', '#0acf97'],
 		labels: ['Total Sent', 'Reached', 'Opened'],
 		plotOptions: {
 			radialBar: {

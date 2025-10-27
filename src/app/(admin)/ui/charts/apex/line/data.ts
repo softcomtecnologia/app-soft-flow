@@ -1723,7 +1723,7 @@ export const LineWithDataLabelOps: ApexOptions = {
 			show: false,
 		},
 	},
-	colors: ['#6c757d', '#727cf5'],
+	colors: ['#6c757d', '#f59e0b'],
 	dataLabels: {
 		enabled: true,
 	},
@@ -1984,7 +1984,7 @@ export const SyncingChartOps: ApexOptions = {
 			},
 		},
 	},
-	colors: ['#727cf5'],
+	colors: ['#f59e0b'],
 	dataLabels: {
 		enabled: false,
 	},
@@ -2344,7 +2344,7 @@ export const BrushChartOps: ApexOptions = {
 			show: false,
 		},
 	},
-	colors: ['#727cf5'],
+	colors: ['#f59e0b'],
 	stroke: {
 		width: 3,
 	},

@@ -46,7 +46,7 @@ export const BasicBoxplotOps: ApexOptions = {
 	plotOptions: {
 		boxPlot: {
 			colors: {
-				upper: '#727cf5',
+				upper: '#f59e0b',
 				lower: '#0acf97',
 			},
 		},
@@ -199,7 +199,7 @@ export const HorizontalBoxPlotOps: ApexOptions = {
 		},
 		boxPlot: {
 			colors: {
-				upper: '#727cf5',
+				upper: '#f59e0b',
 				lower: '#0acf97',
 			},
 		},

@@ -1,8 +1,8 @@
 import { type ChartConfiguration } from 'chart.js/auto';
 import { hexToRGB } from '@/utils';
 
-const colors1 = ['#727cf5', '#0acf97'];
-const colors2 = ['#727cf5', '#fa5c7c', '#0acf97', '#ebeff2', '#f56f36'];
+const colors1 = ['#f59e0b', '#0acf97'];
+const colors2 = ['#f59e0b', '#fa5c7c', '#0acf97', '#ebeff2', '#f56f36'];
 
 export const bubbleConfig: ChartConfiguration = {
 	type: 'bubble',

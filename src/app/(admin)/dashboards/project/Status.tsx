@@ -7,7 +7,7 @@ import CardTitle from '@/components/CardTitle';
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const Status = () => {
-	const colors = ['#0acf97', '#727cf5', '#fa5c7c'];
+	const colors = ['#0acf97', '#f59e0b', '#fa5c7c'];
 
 	const donutChartData = {
 		labels: ['Completed', 'In-progress', 'Behind'],

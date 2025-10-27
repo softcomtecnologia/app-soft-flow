@@ -206,7 +206,7 @@ export const DistributedTreemapOpt: ApexOptions = {
 		text: 'Distibuted Treemap (different color for each cell)',
 		align: 'center',
 	},
-	colors: ['#727cf5', '#0acf97', '#fa5c7c', '#6c757d', '#39afd1', '#ffc35a', ' #eef2f7', ' #313a46'],
+	colors: ['#f59e0b', '#0acf97', '#fa5c7c', '#6c757d', '#39afd1', '#ffc35a', ' #eef2f7', ' #313a46'],
 	plotOptions: {
 		treemap: {
 			distributed: true,
@@ -214,7 +214,7 @@ export const DistributedTreemapOpt: ApexOptions = {
 		},
 	},
 };
-const colors = ['#727cf5', '#39afd1'];
+const colors = ['#f59e0b', '#39afd1'];
 
 export const ColorRangeTreemapOpt: ApexOptions = {
 	series: [

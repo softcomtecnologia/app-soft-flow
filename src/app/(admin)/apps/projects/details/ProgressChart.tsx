@@ -38,7 +38,7 @@ const ProgressChart = () => {
 				label: 'Plan Tasks',
 				fill: true,
 				backgroundColor: 'transparent',
-				borderColor: '#727cf5',
+				borderColor: '#f59e0b',
 				borderDash: [5, 5],
 				tension: 0.4,
 				data: [42, 58, 66, 93, 82, 105, 92],

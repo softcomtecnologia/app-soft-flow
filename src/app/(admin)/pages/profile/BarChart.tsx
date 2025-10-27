@@ -15,7 +15,7 @@ const BarChart = () => {
 	const createGradient = (ctx: CanvasRenderingContext2D, area: ChartArea) => {
 		const gradientStroke = ctx.createLinearGradient(0, 500, 0, 150);
 		gradientStroke.addColorStop(0, '#fa5c7c');
-		gradientStroke.addColorStop(1, '#727cf5');
+		gradientStroke.addColorStop(1, '#f59e0b');
 		return gradientStroke;
 	};
 

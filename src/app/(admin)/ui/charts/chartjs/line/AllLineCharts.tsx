@@ -42,7 +42,7 @@ const AllLineCharts = () => {
 							<h4 className="header-title mb-4">Interpolation</h4>
 							<div dir="ltr">
 								<div className="mt-3 chartjs-chart" style={{ height: 320 }}>
-									<canvas id="interpolation-example" data-colors="#727cf5,#0acf97" />
+									<canvas id="interpolation-example" data-colors="#f59e0b,#0acf97" />
 								</div>
 							</div>
 						</Card.Body>
@@ -54,7 +54,7 @@ const AllLineCharts = () => {
 							<h4 className="header-title mb-4">Line</h4>
 							<div dir="ltr">
 								<div className="mt-3 chartjs-chart" style={{ height: 320 }}>
-									<canvas id="line-example" data-colors="#727cf5,#0acf97" />
+									<canvas id="line-example" data-colors="#f59e0b,#0acf97" />
 								</div>
 							</div>
 						</Card.Body>
@@ -69,7 +69,7 @@ const AllLineCharts = () => {
 							<h4 className="header-title mb-4">Multi-Axes</h4>
 							<div dir="ltr">
 								<div className="mt-3 chartjs-chart" style={{ height: 320 }}>
-									<canvas id="multi-axes-example" data-colors="#727cf5,#0acf97" />
+									<canvas id="multi-axes-example" data-colors="#f59e0b,#0acf97" />
 								</div>
 							</div>
 						</Card.Body>
@@ -81,7 +81,7 @@ const AllLineCharts = () => {
 							<h4 className="header-title mb-4">Point Styling</h4>
 							<div dir="ltr">
 								<div className="mt-3 chartjs-chart" style={{ height: 320 }}>
-									<canvas id="point-styling-example" data-colors="#727cf5,#0acf97" />
+									<canvas id="point-styling-example" data-colors="#f59e0b,#0acf97" />
 								</div>
 							</div>
 						</Card.Body>
@@ -96,7 +96,7 @@ const AllLineCharts = () => {
 							<h4 className="header-title mb-4">Line Segment</h4>
 							<div dir="ltr">
 								<div className="mt-3 chartjs-chart" style={{ height: 320 }}>
-									<canvas id="line-segment-example" data-colors="#727cf5,#0acf97" />
+									<canvas id="line-segment-example" data-colors="#f59e0b,#0acf97" />
 								</div>
 							</div>
 						</Card.Body>
@@ -108,7 +108,7 @@ const AllLineCharts = () => {
 							<h4 className="header-title mb-4">Stepped</h4>
 							<div dir="ltr">
 								<div className="mt-3 chartjs-chart" style={{ height: 320 }}>
-									<canvas id="stepped-example" data-colors="#727cf5,#0acf97" />
+									<canvas id="stepped-example" data-colors="#f59e0b,#0acf97" />
 								</div>
 							</div>
 						</Card.Body>

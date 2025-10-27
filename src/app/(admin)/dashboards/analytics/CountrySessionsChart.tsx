@@ -30,7 +30,7 @@ const CountrySessionsChart = () => {
                 horizontal: true,
             },
         },
-        colors: ['rgba(114, 124, 245, 0.85)'],
+        colors: ['rgba(245, 158, 11, 0.85)'],
         dataLabels: {
             enabled: false,
         },
@@ -62,11 +62,11 @@ const CountrySessionsChart = () => {
                         ScaleGB: '#809bfe',
                         ScaleNL: '#4d73fe',
                         ScaleIT: '#1b4cfe',
-                        ScaleFR: '#727cf5',
+                        ScaleFR: '#f59e0b',
                         ScaleJP: '#e7fef7',
                         ScaleUS: '#e7e9fd',
                         ScaleCN: '#8890f7',
-                        ScaleIN: '#727cf5',
+                        ScaleIN: '#f59e0b',
                     },
                     values: {
                         KR: 'ScaleKR',

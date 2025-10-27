@@ -46,7 +46,7 @@ const AllOtherCharts = () => {
 							<h4 className="header-title mb-4">Bubble</h4>
 							<div dir="ltr">
 								<div className="mt-3 chartjs-chart" style={{ height: 320 }}>
-									<canvas id="bubble-example" data-colors="#727cf5,#0acf97" />
+									<canvas id="bubble-example" data-colors="#f59e0b,#0acf97" />
 								</div>
 							</div>
 						</Card.Body>
@@ -58,7 +58,7 @@ const AllOtherCharts = () => {
 							<h4 className="header-title mb-4">DONUT</h4>
 							<div dir="ltr">
 								<div className="mt-3 chartjs-chart" style={{ height: 320 }}>
-									<canvas id="donut-example" data-colors="#727cf5,#fa5c7c,#0acf97,#ebeff2" />
+									<canvas id="donut-example" data-colors="#f59e0b,#fa5c7c,#0acf97,#ebeff2" />
 								</div>
 							</div>
 						</Card.Body>
@@ -73,7 +73,7 @@ const AllOtherCharts = () => {
 							<h4 className="header-title mb-4">Pie</h4>
 							<div dir="ltr">
 								<div className="mt-3 chartjs-chart" style={{ height: 320 }}>
-									<canvas id="pie-example" data-colors="#727cf5,#fa5c7c,#0acf97,#ebeff2, #f56f36" />
+									<canvas id="pie-example" data-colors="#f59e0b,#fa5c7c,#0acf97,#ebeff2, #f56f36" />
 								</div>
 							</div>
 						</Card.Body>
@@ -85,7 +85,7 @@ const AllOtherCharts = () => {
 							<h4 className="header-title mb-4">Polar Area</h4>
 							<div dir="ltr">
 								<div className="mt-3 chartjs-chart" style={{ height: 320 }}>
-									<canvas id="polar-area-example" data-colors="#727cf5,#fa5c7c,#0acf97,#ebeff2, #f56f36" />
+									<canvas id="polar-area-example" data-colors="#f59e0b,#fa5c7c,#0acf97,#ebeff2, #f56f36" />
 								</div>
 							</div>
 						</Card.Body>
@@ -100,7 +100,7 @@ const AllOtherCharts = () => {
 							<h4 className="header-title mb-4">Radar</h4>
 							<div dir="ltr">
 								<div className="mt-3 chartjs-chart" style={{ height: 320 }}>
-									<canvas id="radar-example" data-colors="#727cf5,#0acf97" />
+									<canvas id="radar-example" data-colors="#f59e0b,#0acf97" />
 								</div>
 							</div>
 						</Card.Body>
@@ -112,7 +112,7 @@ const AllOtherCharts = () => {
 							<h4 className="header-title mb-4">Scatter</h4>
 							<div dir="ltr">
 								<div className="mt-3 chartjs-chart" style={{ height: 320 }}>
-									<canvas id="scatter-example" data-colors="#727cf5,#0acf97" />
+									<canvas id="scatter-example" data-colors="#f59e0b,#0acf97" />
 								</div>
 							</div>
 						</Card.Body>
@@ -127,7 +127,7 @@ const AllOtherCharts = () => {
 							<h4 className="header-title mb-4">Stacked Bar/Line</h4>
 							<div dir="ltr">
 								<div className="mt-3 chartjs-chart" style={{ height: 320 }}>
-									<canvas id="bar-line-example" data-colors="#727cf5,#0acf97" />
+									<canvas id="bar-line-example" data-colors="#f59e0b,#0acf97" />
 								</div>
 							</div>
 						</Card.Body>

@@ -28,7 +28,7 @@ const ProjectStatistics = () => {
 			width: 3,
 			colors: ['transparent'],
 		},
-		colors: ['#ced1ff', '#727cf5'],
+		colors: ['#ced1ff', '#f59e0b'],
 		xaxis: {
 			categories: ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
 		},

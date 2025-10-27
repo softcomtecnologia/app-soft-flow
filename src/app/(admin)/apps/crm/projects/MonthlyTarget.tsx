@@ -10,7 +10,7 @@ const MonthlyTarget = () => {
 			height: 220,
 			type: 'pie',
 		},
-		colors: ['#727cf5', '#0acf97'],
+		colors: ['#f59e0b', '#0acf97'],
 		legend: {
 			show: false,
 		},

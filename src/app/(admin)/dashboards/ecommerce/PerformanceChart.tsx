@@ -36,7 +36,7 @@ const PerformanceChart = () => {
 		legend: {
 			show: false,
 		},
-		colors: ['#727cf5', '#e3eaef'],
+		colors: ['#f59e0b', '#e3eaef'],
 		xaxis: {
 			categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
 			axisBorder: {

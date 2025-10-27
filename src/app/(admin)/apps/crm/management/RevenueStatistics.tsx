@@ -35,7 +35,7 @@ const RevenueStatistics = () => {
 		legend: {
 			show: false,
 		},
-		colors: ['#727cf5', '#0acf97'],
+		colors: ['#f59e0b', '#0acf97'],
 		xaxis: {
 			categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
 			tooltip: {

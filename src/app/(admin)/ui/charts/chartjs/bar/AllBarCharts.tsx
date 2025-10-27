@@ -41,7 +41,7 @@ const AllBarCharts = () => {
 							<h4 className="header-title mb-4">Border Radius</h4>
 							<div dir="ltr">
 								<div className="mt-3 chartjs-chart" style={{ height: 320 }}>
-									<canvas id="border-radius-example" data-colors="#727cf5,#0acf97" />
+									<canvas id="border-radius-example" data-colors="#f59e0b,#0acf97" />
 								</div>
 							</div>
 						</Card.Body>
@@ -53,7 +53,7 @@ const AllBarCharts = () => {
 							<h4 className="header-title mb-4">Floating</h4>
 							<div dir="ltr">
 								<div className="mt-3 chartjs-chart" style={{ height: 320 }}>
-									<canvas id="floating-example" data-colors="#727cf5,#0acf97" />
+									<canvas id="floating-example" data-colors="#f59e0b,#0acf97" />
 								</div>
 							</div>
 						</Card.Body>
@@ -68,7 +68,7 @@ const AllBarCharts = () => {
 							<h4 className="header-title mb-4">Horizontal</h4>
 							<div dir="ltr">
 								<div className="mt-3 chartjs-chart" style={{ height: 320 }}>
-									<canvas id="horizontal-example" data-colors="#727cf5,#0acf97" />
+									<canvas id="horizontal-example" data-colors="#f59e0b,#0acf97" />
 								</div>
 							</div>
 						</Card.Body>
@@ -80,7 +80,7 @@ const AllBarCharts = () => {
 							<h4 className="header-title mb-4">Stacked</h4>
 							<div dir="ltr">
 								<div className="mt-3 chartjs-chart" style={{ height: 320 }}>
-									<canvas id="stacked-example" data-colors="#727cf5,#0acf97" />
+									<canvas id="stacked-example" data-colors="#f59e0b,#0acf97" />
 								</div>
 							</div>
 						</Card.Body>
@@ -95,7 +95,7 @@ const AllBarCharts = () => {
 							<h4 className="header-title mb-4">Stacked with Groups</h4>
 							<div dir="ltr">
 								<div className="mt-3 chartjs-chart" style={{ height: 320 }}>
-									<canvas id="group-stack-example" data-colors="#727cf5,#0acf97" />
+									<canvas id="group-stack-example" data-colors="#f59e0b,#0acf97" />
 								</div>
 							</div>
 						</Card.Body>
@@ -107,7 +107,7 @@ const AllBarCharts = () => {
 							<h4 className="header-title mb-4">Vertical</h4>
 							<div dir="ltr">
 								<div className="mt-3 chartjs-chart" style={{ height: 320 }}>
-									<canvas id="vertical-example" data-colors="#727cf5,#0acf97" />
+									<canvas id="vertical-example" data-colors="#f59e0b,#0acf97" />
 								</div>
 							</div>
 						</Card.Body>
