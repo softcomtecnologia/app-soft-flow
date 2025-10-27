@@ -79,6 +79,18 @@ export default function FormResumeSkelleton() {
 					<Placeholder as="div" animation="glow">
 						<Placeholder xs={12} style={{ height: '120px' }} />
 					</Placeholder>
+					<Placeholder as="div" animation="glow" className="mb-2">
+						<Placeholder xs={3} style={{ height: '16px' }} />
+					</Placeholder>
+					<Placeholder as="div" animation="glow">
+						<Placeholder xs={12} style={{ height: '120px' }} />
+					</Placeholder>
+					<Placeholder as="div" animation="glow" className="mb-2">
+						<Placeholder xs={3} style={{ height: '16px' }} />
+					</Placeholder>
+					<Placeholder as="div" animation="glow">
+						<Placeholder xs={12} style={{ height: '120px' }} />
+					</Placeholder>
 				</Card.Body>
 			</Card>
 		</div>

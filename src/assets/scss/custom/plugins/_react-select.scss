@@ -13,6 +13,14 @@
     }
   }
   
+  .case-status-select {
+    width: 100%;
+
+    @media (min-width: 768px) {
+      min-width: 260px;
+    }
+  }
+  
   .react-select__control--is-focused {
     border-color: $input-focus-border-color !important;
     box-shadow: none !important;

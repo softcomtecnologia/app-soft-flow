@@ -23,6 +23,8 @@ export default function ResumeForm({ caseData }: ResumeFormProps) {
 				prioridade: caseData.caso.caracteristicas.prioridade || '',
 				desenvolvedor: caseData.caso.usuarios.desenvolvimento?.nome || '',
 				resumo: caseData.caso.textos.descricao_resumo || '',
+				descricao_completa: caseData.caso.textos.descricao_completa || '',
+				anexo: caseData.caso.textos.anexo || '',
 				status: caseData.caso.status.descricao || '',
 			});
 		}
@@ -151,18 +153,43 @@ export default function ResumeForm({ caseData }: ResumeFormProps) {
 								</h5>
 							</Card.Header>
 							<Card.Body>
-								<Form.Group>
-									<Form.Label className="fw-semibold">Resumo do Caso</Form.Label>
-									<Form.Control
-										as="textarea"
-										name="resumo"
-										placeholder="Descrição resumida do caso"
-										rows={6}
-										disabled
-										className="bg-light"
-										value={caseData.caso.textos.descricao_resumo || ''}
-									/>
-								</Form.Group>
+								<Row>
+									<Form.Group style={{marginBottom: '18px'}}>
+										<Form.Label className="fw-semibold">Resumo do Caso</Form.Label>
+										<Form.Control
+											as="textarea"
+											name="resumo"
+											placeholder="Descrição resumida do caso"
+											disabled
+											rows={2}
+											className="bg-light"
+											value={caseData.caso.textos.descricao_resumo || ''}
+										/>
+									</Form.Group>
+									<Form.Group style={{marginBottom: '18px'}}>
+										<Form.Label className="fw-semibold">Descrição Completa</Form.Label>
+										<Form.Control
+											as="textarea"
+											name="descricao_completa"
+											placeholder="Descrição Completa"
+											rows={6}
+											disabled
+											className="bg-light"
+											value={caseData.caso.textos.descricao_completa || ''}
+										/>
+									</Form.Group>
+									<Form.Group style={{marginBottom: '18px'}}>
+										<Form.Label className="fw-semibold">Anexo</Form.Label>
+										<Form.Control
+											as="input"
+											name="anexo"
+											placeholder="Esse caso não possui anexos"
+											disabled
+											className="bg-light"
+											value={caseData.caso.textos.anexo || ''}
+										/>
+									</Form.Group>
+								</Row>
 							</Card.Body>
 						</Card>
 					</div>

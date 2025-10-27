@@ -105,6 +105,8 @@ interface TemposCaso {
 
 interface TextosCaso {
 	descricao_resumo: string;
+	descricao_completa: string;
+	anexo: string;
 	passos_para_reproduzir: string;
 	descricao_commit: string | null;
 }

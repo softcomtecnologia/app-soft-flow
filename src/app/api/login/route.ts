@@ -27,7 +27,7 @@ export async function POST(request: Request) {
 			cookieStore.set(name, value, {
 				httpOnly: httpOnly,
 				path: '/',
-				maxAge: 60 * 60 * 24 * 7,
+				maxAge: 60 * 60 * 2, //2
 			});
 		};
 

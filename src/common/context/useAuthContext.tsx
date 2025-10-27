@@ -25,7 +25,7 @@ const authSessionKey = 'access_token';
 
 export function AuthProvider({ children }: ChildrenType) {
 	const getSession = (): boolean => {
-		return !!getCookie("user_email");
+		return !!getCookie("user_email") && !!getCookie('user_id') && !!getCookie("user_name");
 	};
 
 	const [user, setUser] = useState<User | undefined>(undefined);
@@ -35,10 +35,10 @@ export function AuthProvider({ children }: ChildrenType) {
 		const checkAuth = getSession();
 		setIsAuthenticated(checkAuth);
 
-		if (checkAuth) {
-			const user = JSON.parse(getCookie(authSessionKey)?.toString() || '{}');
-			setUser(user);
-		}
+		// if (checkAuth) {
+		// 	const user = JSON.parse(getCookie(authSessionKey)?.toString() || '{}');
+		// 	setUser(user);
+		// }
 	}, []);
 
 	const saveSession = (auth: boolean) => {
@@ -51,7 +51,9 @@ export function AuthProvider({ children }: ChildrenType) {
 	};
 
 	const removeSession = () => {
-		deleteCookie(authSessionKey);
+		deleteCookie("user_email");
+		deleteCookie("user_name");
+		deleteCookie("user_id");
 		setUser(undefined);
 		setIsAuthenticated(false);
 	};

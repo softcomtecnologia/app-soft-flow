@@ -1,4 +1,5 @@
 export default interface ICaseFilter {
-	NumeroCaso?: string,
-	usuario_dev_id?: string
+	numero_caso?: string,
+	usuario_dev_id?: string,
+	status_descricao?: string,
 }
