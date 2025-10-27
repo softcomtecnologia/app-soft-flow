@@ -28,12 +28,15 @@ export const CasesProvider = ({ children }: { children: React.ReactNode }) => {
 	const [loading, setLoading] = useState<boolean>(false);
 
 	const fetchCases = async (data?: ICaseFilter) => {
-
 		setLoading(true);
 		try {
 			if (!data) {
 				const userId = Cookies.get("user_id");
-				data = {usuario_dev_id: userId};
+				data = {
+					usuario_dev_id: userId,
+					sort_by: "prioridade",
+					status_descricao: "ATRIBUÍDO",
+				};
 			}
 			const response = await allCase(data);
 			setCases(response.data);
@@ -57,7 +60,7 @@ export const CasesProvider = ({ children }: { children: React.ReactNode }) => {
 	}
 
 	useEffect(() => {
-		fetchCases({usuario_dev_id: Cookies.get("user_id")});
+		fetchCases();
 	}, []);
 
 	return (

@@ -7,7 +7,7 @@ import TopbarSearch from './TopbarSearch';
 import AppsDropdown from './AppsDropdown';
 import MaximizeScreen from './MaximizeScreen';
 import {OverlayTrigger, Tooltip} from 'react-bootstrap';
-
+import Cookies from 'js-cookie';
 // assets
 import userImage from '@/assets/images/users/avatar-1.jpg';
 import logo from '@/assets/images/logo.png';
@@ -158,8 +158,8 @@ const Topbar = ({topbarDark, toggleMenu, navOpen}: TopbarProps) => {
                     </li>
 
                     <li className="dropdown">
-                        <ProfileDropdown userImage={userImage} menuItems={profileMenus} username={'Matheus Henrique'}
-                                         userTitle={'Founder'}/>
+                        <ProfileDropdown userImage={userImage} menuItems={profileMenus} username={Cookies.get('user_name') || ''} />
+                                         
                     </li>
                 </ul>
             </div>

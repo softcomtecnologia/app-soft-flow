@@ -24,6 +24,7 @@ const CaseFilters = () => {
 			numero_caso: data.numero_caso?.trim() || undefined,
 			status_descricao: data.status_descricao || undefined,
 			usuario_dev_id: Cookies.get('user_id'),
+			sort_by: "prioridade",
 		};
 
 		fetchCases(payload);

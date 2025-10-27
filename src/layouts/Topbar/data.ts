@@ -66,21 +66,6 @@ const notifications: NotificationItem[] = [
 // get the profilemenu
 const profileMenus: ProfileOption[] = [
 	{
-		label: 'My Account',
-		icon: 'mdi mdi-account-circle',
-		redirectTo: '#',
-	},
-	{
-		label: 'Settings',
-		icon: 'mdi mdi-account-edit',
-		redirectTo: '#',
-	},
-	{
-		label: 'Support',
-		icon: 'mdi mdi-lifebuoy',
-		redirectTo: '#',
-	},
-	{
 		label: 'Lock Screen',
 		icon: 'mdi mdi-lock-outline',
 		redirectTo: '/account/lock-screen',

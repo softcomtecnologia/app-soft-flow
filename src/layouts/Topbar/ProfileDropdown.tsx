@@ -10,7 +10,6 @@ type ProfileDropdownProps = {
 	menuItems: Array<ProfileOption>;
 	userImage: StaticImageData;
 	username: string;
-	userTitle?: string;
 };
 
 const ProfileDropdown = ({ userTitle, username, menuItems, userImage }: ProfileDropdownProps) => {
@@ -30,13 +29,12 @@ const ProfileDropdown = ({ userTitle, username, menuItems, userImage }: ProfileD
 				</span>
 				<span className="d-lg-flex flex-column gap-1 d-none">
 					<h5 className="my-0">{username}</h5>
-					<h6 className="my-0 fw-normal align-self-start">{userTitle}</h6>
 				</span>
 			</Dropdown.Toggle>
 			<Dropdown.Menu align={'end'} className="dropdown-menu-animated profile-dropdown">
 				<div onClick={toggleDropdown}>
 					<div className="dropdown-header noti-title">
-						<h6 className="text-overflow m-0">Welcome !</h6>
+						<h6 className="text-overflow m-0">Bem vindo!</h6>
 					</div>
 					{menuItems.map((item, i) => {
 						return (
