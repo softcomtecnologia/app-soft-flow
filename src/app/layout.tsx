@@ -10,15 +10,15 @@ import 'react-quill-new/dist/quill.bubble.css';
 import 'jsvectormap/dist/css/jsvectormap.min.css'
 import '@/assets/scss/Saas.scss';
 
-import favicon from "@/assets/images/favicon.ico"
+import logoSm from '@/assets/images/logo-sm.png';
 
 export const metadata: Metadata = {
     title: {
-        template: '%s | Hyper Nextjs - Admin & Dashboard Template',
-        default: 'Hyper Nextjs - Admin & Dashboard Template',
+        template: '%s | SoftFlow',
+        default: 'SoftFlow',
     },
     description: 'A fully responsive admin theme which can be used to build CRM, CMS,ERP etc.',
-    icons: [favicon.src]
+    icons: {icon: logoSm.src}
 };
 
 const splashScreenStyles = `

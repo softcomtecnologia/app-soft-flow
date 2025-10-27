@@ -5,6 +5,7 @@ import { Button, Col, Row } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import AccountWrapper from '../AccountWrapper';
 import useLogin from '../login2/useLogin';
+import Spinner from '@/components/Spinner';
 
 const BottomLink = () => {
 	const { t } = useTranslation();
@@ -38,7 +39,14 @@ const LoginPage = () => {
 
 				<div className="mb-3 text-center">
 					<Button variant="primary" type="submit" disabled={loading}>
-						{t('Log In')}
+						{
+							loading ? 
+							<>
+								<span style={{marginRight: '10px'}}>Entrando</span>
+								<Spinner className="spinner-grow-sm" tag="span" color="white" type="bordered" />
+							</>
+							: t('Entrar')
+						}
 					</Button>
 				</div>
 			</Form>

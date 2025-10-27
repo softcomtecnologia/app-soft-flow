@@ -12,7 +12,6 @@ const CasesList = () => {
 
 	return (
 		<>
-			<PageBreadcrumb title="Casos" subName="CRM" />
 			<Row>
 				<Col xs={12}>
 					<Card>

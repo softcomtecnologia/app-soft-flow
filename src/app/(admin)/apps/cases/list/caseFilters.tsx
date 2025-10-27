@@ -7,6 +7,7 @@ import ICaseFilter from '@/types/cases/ICaseFilter';
 import { useCasesContext } from '@/contexts/casesContext';
 import Cookies from 'js-cookie';
 import Select from 'react-select';
+import Spinner from '@/components/Spinner';
 
 const statusOptions = [
 { value: 'ATRIBUÍDO', label: 'ATRIBUIDO' },
@@ -16,7 +17,7 @@ const statusOptions = [
 
 const CaseFilters = () => {
 	const methods = useForm<ICaseFilter>();
-	const { fetchCases } = useCasesContext();
+	const { fetchCases, loading } = useCasesContext();
 
 	const onSearch = (data: ICaseFilter) => {
 		const payload: ICaseFilter = {
@@ -64,8 +65,16 @@ const CaseFilters = () => {
 						/>
 					</Col>
 					<Col xs={12} sm="auto" className="d-grid gap-2 d-sm-inline-flex">
-						<Button type="submit" variant="primary">
-							Pesquisar
+						<Button type="submit" variant="primary" disabled={loading}>
+							{
+								loading ?
+								<span className='text-center'>
+									<span style={{marginRight: '10px'}}>Pesquisando</span>
+									<Spinner className="spinner-grow-sm" tag="span" color="white" type="bordered" />
+								</span>
+								:
+								'Pesquisar'
+							}
 						</Button>
 					</Col>
 				</Row>

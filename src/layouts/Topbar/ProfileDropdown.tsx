@@ -12,7 +12,7 @@ type ProfileDropdownProps = {
 	username: string;
 };
 
-const ProfileDropdown = ({ userTitle, username, menuItems, userImage }: ProfileDropdownProps) => {
+const ProfileDropdown = ({ username, menuItems, userImage }: ProfileDropdownProps) => {
 	const [isOpen, toggleDropdown] = useToggle();
 
 	return (
