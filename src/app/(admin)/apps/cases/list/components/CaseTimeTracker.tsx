@@ -78,7 +78,7 @@ export default function CaseTimeTracker({ caseData }: CaseTimeTrackerProps) {
 		} finally {
 			if (shouldAddEntry) {
 				const startTimeIso = new Date().toISOString();
-				// @ts-ignore
+				// @ts-expect-error
 				setLocalCase((prev) => {
 					if (!prev) {
 						return prev;
