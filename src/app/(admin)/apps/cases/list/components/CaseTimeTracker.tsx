@@ -12,7 +12,6 @@ interface CaseTimeTrackerProps {
 }
 
 export default function CaseTimeTracker({ caseData }: CaseTimeTrackerProps) {
-
 	const [loading, setLoading] = useState<boolean>(false);
 	const [localCase, setLocalCase] = useState<ICase | null>(caseData ?? null);
 	const [elapsedMinutes, setElapsedMinutes] = useState<number | null>(null);
@@ -176,6 +175,7 @@ export default function CaseTimeTracker({ caseData }: CaseTimeTrackerProps) {
 	const runningStart = activeEntry?.datas.abertura ? formatTime(activeEntry.datas.abertura) : null;
 	const isRunning = Boolean(activeEntry);
 
+	
 	useEffect(() => {
 		if (!isRunning || !activeEntry?.datas.abertura) {
 			setElapsedMinutes(null);

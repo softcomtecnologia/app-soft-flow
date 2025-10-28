@@ -30,7 +30,9 @@ const CasesList = () => {
 							</div>
 
 							<Row className="g-3 mb-3">
-								<Kpis loading={loading} />
+								<Col xs={12}>
+									<Kpis loading={loading} />
+								</Col>
 							</Row>
 
 							<div className="table-responsive">

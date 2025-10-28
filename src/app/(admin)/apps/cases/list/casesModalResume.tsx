@@ -4,6 +4,7 @@ import { ICase } from '@/types/cases/ICase';
 import ResumeForm from '@/app/(admin)/apps/cases/form/resumeForm/resumeForm';
 import CaseTimeTracker from './components/CaseTimeTracker';
 import IconifyIcon from '@/components/wrappers/IconifyIcon';
+import TimetrackerSkelleton from "./skelletons/timetrackerSkelleton";
 
 interface Props {
 	open: boolean;
@@ -66,7 +67,10 @@ export default function CasesModalResume({ setOpen, open, case: caseData }: Prop
 										</div>
 									</Tab.Pane>
 									<Tab.Pane eventKey="tempo">
-										<CaseTimeTracker caseData={caseData} />
+										{
+											!caseData ? <TimetrackerSkelleton/> : <CaseTimeTracker caseData={caseData} />
+										}
+										
 									</Tab.Pane>
 								</Tab.Content>
 							</div>
