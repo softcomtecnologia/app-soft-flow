@@ -1,15 +1,14 @@
 'use client';
-import PageBreadcrumb from '@/components/PageBreadcrumb';
-import { Card, CardBody, Col, Row, ToastContainer } from 'react-bootstrap';
+import { Card, CardBody, Col, Row } from 'react-bootstrap';
 import CaseFilters from './caseFilters';
 import CasesTable from './cases';
 import Kpis from './kpis';
 import CasesModal from './casesModal';
 import { CasesProvider, useCasesContext } from '@/contexts/casesContext';
+import { ToastContainer, toast } from 'react-toastify';
 
 const CasesList = () => {
 	const { cases, loading } = useCasesContext();
-
 	return (
 		<>
 			<Row>
@@ -41,7 +40,7 @@ const CasesList = () => {
 					</Card>
 				</Col>
 			</Row>
-			<ToastContainer />
+			<ToastContainer position='top-center'/>
 		</>
 	);
 };

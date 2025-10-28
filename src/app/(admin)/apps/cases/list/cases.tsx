@@ -98,11 +98,6 @@ const CasesTable = ({ data, loading }: Props) => {
                 <Table responsive className="table-centered table-nowrap mb-0">
                     <thead className="table-light">
                         <tr>
-                            <th style={{ width: '20px' }}>
-                                <form>
-                                    <FormCheck type="checkbox" id="all-cases" />
-                                </form>
-                            </th>
                             <th>Numero do Caso</th>
                             <th>Atribuido</th>
                             <th>Produto</th>
@@ -120,12 +115,6 @@ const CasesTable = ({ data, loading }: Props) => {
                         ) : (data || []).length ? (
                             (data || []).map((c, index) => (
                                 <tr key={`${c.caso.id}-${index}`}>
-                                    <td>
-                                        <form>
-                                            <FormCheck type="checkbox" id={`${c.caso.id}`} />
-                                        </form>
-                                    </td>
-
                                     <td>
                                         <Link href="#" className="text-body fw-bold">
                                             {c.caso.id}

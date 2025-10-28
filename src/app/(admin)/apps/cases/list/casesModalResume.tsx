@@ -66,14 +66,7 @@ export default function CasesModalResume({ setOpen, open, case: caseData }: Prop
 										</div>
 									</Tab.Pane>
 									<Tab.Pane eventKey="tempo">
-										{caseData ? (
-											<CaseTimeTracker caseId={caseData.caso.id.toString()} />
-										) : (
-											<div className="text-center py-5">
-												<IconifyIcon icon="lucide:clock" className="text-muted mb-3" style={{ fontSize: '3rem' }} />
-												<h5 className="text-muted">Carregando...</h5>
-											</div>
-										)}
+										<CaseTimeTracker caseData={caseData} />
 									</Tab.Pane>
 								</Tab.Content>
 							</div>
