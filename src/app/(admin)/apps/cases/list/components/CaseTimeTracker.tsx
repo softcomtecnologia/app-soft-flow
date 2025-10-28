@@ -78,7 +78,7 @@ export default function CaseTimeTracker({ caseData }: CaseTimeTrackerProps) {
 		} finally {
 			if (shouldAddEntry) {
 				const startTimeIso = new Date().toISOString();
-				// @ts-expect-error
+				// @ts-expect-error - cloning nested case entries keeps existing optional fields even if undefined
 				setLocalCase((prev) => {
 					if (!prev) {
 						return prev;
