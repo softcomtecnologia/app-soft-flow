@@ -4,7 +4,7 @@ import { configureFakeBackend } from '@/common/api';
 import { AuthProvider } from '@/common/context/useAuthContext';
 import type { ChildrenType } from '@/types/component-props';
 import { useEffect } from 'react';
-import { CasesProvider } from '@/contexts/casesContext';
+import ActiveCaseIndicator from '@/components/ActiveCaseIndicator';
 
 configureFakeBackend();
 const AppProvidersWrapper = ({ children }: ChildrenType) => {
@@ -35,7 +35,8 @@ const AppProvidersWrapper = ({ children }: ChildrenType) => {
 			<AuthProvider>
 				<ThemeProvider>
 					<NotificationProvider>
-							{children}
+						{children}
+						<ActiveCaseIndicator />
 					</NotificationProvider>
 				</ThemeProvider>
 			</AuthProvider>

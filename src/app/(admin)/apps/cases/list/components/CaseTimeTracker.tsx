@@ -6,6 +6,8 @@ import { ICase } from '@/types/cases/ICase';
 import { startTimeCase, stopTimeCase } from '@/services/caseServices';
 import Spinner from '@/components/Spinner';
 import { toast } from 'react-toastify';
+import TimetrackerSkelleton from '../skelletons/timetrackerSkelleton';
+import { ACTIVE_CASE_EVENT, ACTIVE_CASE_STORAGE_KEY, ActiveCaseStorageData } from '@/constants/caseTimeTracker';
 
 interface CaseTimeTrackerProps {
 	caseData?: ICase | null;
@@ -77,6 +79,18 @@ export default function CaseTimeTracker({ caseData }: CaseTimeTrackerProps) {
 		} finally {
 			if (shouldAddEntry) {
 				const startTimeIso = new Date().toISOString();
+				if (typeof window !== 'undefined') {
+					try {
+						window.localStorage.setItem(
+							ACTIVE_CASE_STORAGE_KEY,
+							JSON.stringify({ caseId: id, startedAt: startTimeIso })
+						);
+					} catch (error) {
+						console.error('Erro ao armazenar o caso ativo no localStorage:', error);
+					}
+					window.dispatchEvent(new Event(ACTIVE_CASE_EVENT));
+				}
+				setElapsedMinutes(0);
 				// @ts-expect-error - cloning nested case entries keeps existing optional fields even if undefined
 				setLocalCase((prev) => {
 					if (!prev) {
@@ -133,25 +147,33 @@ export default function CaseTimeTracker({ caseData }: CaseTimeTrackerProps) {
 			toast.error('Falha ao parar o tempo.');
 		} finally {
 			if (shouldCloseEntry) {
-		const stopTimeIso = new Date().toISOString();
-		setLocalCase((prev) => {
-			if (!prev) {
-				return prev;
-			}
-			let closed = false;
-			const updatedEntries = (prev.caso.producao ?? []).map((entry) => {
-				if (!closed && !entry.datas.fechamento) {
-					closed = true;
-					return {
-						...entry,
-						datas: {
-							...entry.datas,
-							fechamento: stopTimeIso,
-						},
-					};
+				const stopTimeIso = new Date().toISOString();
+				if (typeof window !== 'undefined') {
+					try {
+						window.localStorage.removeItem(ACTIVE_CASE_STORAGE_KEY);
+					} catch (error) {
+						console.error('Erro ao remover o caso ativo do localStorage:', error);
+					}
+					window.dispatchEvent(new Event(ACTIVE_CASE_EVENT));
 				}
-				return entry;
-			});
+				setLocalCase((prev) => {
+					if (!prev) {
+						return prev;
+					}
+					let closed = false;
+					const updatedEntries = (prev.caso.producao ?? []).map((entry) => {
+						if (!closed && !entry.datas.fechamento) {
+							closed = true;
+							return {
+								...entry,
+								datas: {
+									...entry.datas,
+									fechamento: stopTimeIso,
+								},
+							};
+						}
+						return entry;
+					});
 
 					return {
 						...prev,
@@ -161,6 +183,7 @@ export default function CaseTimeTracker({ caseData }: CaseTimeTrackerProps) {
 						},
 					};
 				});
+				setElapsedMinutes(null);
 			}
 			setLoading(false);
 		}
@@ -175,7 +198,49 @@ export default function CaseTimeTracker({ caseData }: CaseTimeTrackerProps) {
 	const runningStart = activeEntry?.datas.abertura ? formatTime(activeEntry.datas.abertura) : null;
 	const isRunning = Boolean(activeEntry);
 
-	
+	useEffect(() => {
+		if (typeof window === 'undefined') {
+			return;
+		}
+
+		const storedValue = window.localStorage.getItem(ACTIVE_CASE_STORAGE_KEY);
+
+		if (isRunning && caseId && activeEntry?.datas.abertura) {
+			const payload = { caseId, startedAt: activeEntry.datas.abertura };
+			let shouldUpdate = true;
+
+			if (storedValue) {
+				try {
+					const parsed = JSON.parse(storedValue) as ActiveCaseStorageData;
+					if (parsed.caseId === payload.caseId && parsed.startedAt === payload.startedAt) {
+						shouldUpdate = false;
+					}
+				} catch (error) {
+					console.error('Erro ao interpretar dados do caso ativo no localStorage:', error);
+				}
+			}
+
+			if (shouldUpdate) {
+				try {
+					window.localStorage.setItem(ACTIVE_CASE_STORAGE_KEY, JSON.stringify(payload));
+				} catch (error) {
+					console.error('Erro ao sincronizar o caso ativo no localStorage:', error);
+				}
+				window.dispatchEvent(new Event(ACTIVE_CASE_EVENT));
+			}
+		} else if (!isRunning && storedValue) {
+			try {
+				const parsed = JSON.parse(storedValue) as ActiveCaseStorageData;
+				if (parsed.caseId === caseId) {
+					window.localStorage.removeItem(ACTIVE_CASE_STORAGE_KEY);
+					window.dispatchEvent(new Event(ACTIVE_CASE_EVENT));
+				}
+			} catch (error) {
+				console.error('Erro ao interpretar dados do caso ativo no localStorage:', error);
+			}
+		}
+	}, [activeEntry?.datas.abertura, caseId, isRunning]);
+
 	useEffect(() => {
 		if (!isRunning || !activeEntry?.datas.abertura) {
 			setElapsedMinutes(null);
@@ -201,6 +266,10 @@ export default function CaseTimeTracker({ caseData }: CaseTimeTrackerProps) {
 			window.clearInterval(intervalId);
 		};
 	}, [activeEntry?.datas.abertura, isRunning]);
+
+	if (!currentCase) {
+		return <TimetrackerSkelleton />;
+	}
 
 	const getAberturaFechamentoDuration = (start?: string, end?: string) => {
 		if (!start || !end) {

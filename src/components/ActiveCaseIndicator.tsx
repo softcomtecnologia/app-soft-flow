@@ -1,0 +1,136 @@
+'use client';
+
+import { useEffect, useState } from 'react';
+import { Card, Spinner } from 'react-bootstrap';
+import IconifyIcon from '@/components/wrappers/IconifyIcon';
+import { ACTIVE_CASE_EVENT, ACTIVE_CASE_STORAGE_KEY, ActiveCaseStorageData } from '@/constants/caseTimeTracker';
+import CasesModalResume from '@/app/(admin)/apps/cases/list/casesModalResume';
+import { ICase } from '@/types/cases/ICase';
+import { findCase } from '@/services/caseServices';
+import { toast } from 'react-toastify';
+
+const loadActiveCase = (): ActiveCaseStorageData | null => {
+	if (typeof window === 'undefined') {
+		return null;
+	}
+
+	try {
+		const storedValue = window.localStorage.getItem(ACTIVE_CASE_STORAGE_KEY);
+		if (!storedValue) {
+			return null;
+		}
+		const parsed = JSON.parse(storedValue) as ActiveCaseStorageData;
+
+		if (!parsed?.caseId || !parsed?.startedAt) {
+			return null;
+		}
+
+		return parsed;
+	} catch (error) {
+		console.error('Erro ao ler o caso ativo do armazenamento local:', error);
+		return null;
+	}
+};
+
+export default function ActiveCaseIndicator() {
+	const [activeCase, setActiveCase] = useState<ActiveCaseStorageData | null>(() => loadActiveCase());
+	const [modalOpen, setModalOpen] = useState<boolean>(false);
+	const [modalCase, setModalCase] = useState<ICase | null>(null);
+	const [opening, setOpening] = useState<boolean>(false);
+
+	useEffect(() => {
+		const handleStorageChange = (event: StorageEvent) => {
+			if (event.key !== ACTIVE_CASE_STORAGE_KEY) {
+				return;
+			}
+			setActiveCase(loadActiveCase());
+		};
+
+		const handleCustomChange = () => {
+			setActiveCase(loadActiveCase());
+		};
+
+		window.addEventListener('storage', handleStorageChange);
+		window.addEventListener(ACTIVE_CASE_EVENT, handleCustomChange);
+
+		return () => {
+			window.removeEventListener('storage', handleStorageChange);
+			window.removeEventListener(ACTIVE_CASE_EVENT, handleCustomChange);
+		};
+	}, []);
+
+	useEffect(() => {
+		if (!modalOpen) {
+			setModalCase(null);
+		}
+	}, [modalOpen]);
+
+	const handleOpenModal = async () => {
+		if (!activeCase || opening) {
+			return;
+		}
+
+		setOpening(true);
+		try {
+			const response = await findCase(activeCase.caseId);
+			if (response?.data) {
+				setModalCase(response.data);
+				setModalOpen(true);
+			} else {
+				toast.warning('Nao foi possivel obter os dados do caso ativo.');
+			}
+		} catch (error) {
+			console.error('Erro ao obter dados do caso ativo:', error);
+			toast.error('Falha ao carregar os dados do caso.');
+		} finally {
+			setOpening(false);
+		}
+	};
+
+	const activeIndicator = activeCase ? (() => {
+		const { caseId, startedAt } = activeCase;
+		const startedLabel = new Date(startedAt).toLocaleString('pt-BR');
+
+		return (
+			<div
+				className="position-fixed"
+				style={{
+					right: '1.5rem',
+					bottom: '1.5rem',
+					zIndex: 1080,
+					maxWidth: '320px',
+					width: '100%',
+					cursor: opening ? 'wait' : 'pointer',
+				}}
+				onClick={handleOpenModal}
+				role="button"
+				aria-label="Abrir caso em andamento"
+			>
+				<Card className="shadow-lg border-0 bg-primary text-white">
+					<Card.Body className="d-flex gap-3 align-items-start">
+						<div className="flex-shrink-0 d-flex align-items-center">
+							{opening ? (
+								<Spinner animation="border" variant="light" size="sm" />
+							) : (
+								<IconifyIcon icon="lucide:timer" className="fs-3" />
+							)}
+						</div>
+						<div className="d-flex flex-column">
+							<strong className="small text-uppercase text-white-50">Caso em andamento</strong>
+							<span className="fw-semibold">Caso #{caseId}</span>
+							<small className="text-white-75">Iniciado em {startedLabel}</small>
+							<small className="text-white-50 mt-1">Clique para visualizar</small>
+						</div>
+					</Card.Body>
+				</Card>
+			</div>
+		);
+	})() : null;
+
+	return (
+		<>
+			{activeIndicator}
+			<CasesModalResume case={modalCase} open={modalOpen} setOpen={setModalOpen} />
+		</>
+	);
+}
