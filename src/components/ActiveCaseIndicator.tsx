@@ -90,40 +90,66 @@ export default function ActiveCaseIndicator() {
 	const activeIndicator = activeCase ? (() => {
 		const { caseId, startedAt } = activeCase;
 		const startedLabel = new Date(startedAt).toLocaleString('pt-BR');
+		const basePosition = {
+			right: '1.5rem',
+			bottom: '1.5rem',
+			zIndex: 1080,
+			cursor: opening ? 'wait' : 'pointer',
+		} as const;
 
 		return (
-			<div
-				className="position-fixed"
-				style={{
-					right: '1.5rem',
-					bottom: '1.5rem',
-					zIndex: 1080,
-					maxWidth: '320px',
-					width: '100%',
-					cursor: opening ? 'wait' : 'pointer',
-				}}
-				onClick={handleOpenModal}
-				role="button"
-				aria-label="Abrir caso em andamento"
-			>
-				<Card className="shadow-lg border-0 bg-primary text-white">
-					<Card.Body className="d-flex gap-3 align-items-start">
-						<div className="flex-shrink-0 d-flex align-items-center">
-							{opening ? (
-								<Spinner animation="border" variant="light" size="sm" />
-							) : (
-								<IconifyIcon icon="lucide:timer" className="fs-3" />
-							)}
-						</div>
-						<div className="d-flex flex-column">
-							<strong className="small text-uppercase text-white-50">Caso em andamento</strong>
-							<span className="fw-semibold">Caso #{caseId}</span>
-							<small className="text-white-75">Iniciado em {startedLabel}</small>
-							<small className="text-white-50 mt-1">Clique para visualizar</small>
-						</div>
-					</Card.Body>
-				</Card>
-			</div>
+			<>
+				<div
+					className="position-fixed d-none d-md-block"
+					style={{
+						...basePosition,
+						maxWidth: '320px',
+						width: '100%',
+					}}
+					onClick={handleOpenModal}
+					role="button"
+					aria-label="Abrir caso em andamento"
+				>
+					<Card className="shadow-lg border-0 bg-primary text-white">
+						<Card.Body className="d-flex gap-3 align-items-start">
+							<div className="flex-shrink-0 d-flex align-items-center">
+								{opening ? (
+									<Spinner animation="border" variant="light" size="sm" />
+								) : (
+									<IconifyIcon icon="lucide:timer" className="fs-3" />
+								)}
+							</div>
+							<div className="d-flex flex-column">
+								<strong className="small text-uppercase text-white-50">Caso em andamento</strong>
+								<span className="fw-semibold">Caso #{caseId}</span>
+								<small className="text-white-75">Iniciado em {startedLabel}</small>
+								<small className="text-white-50 mt-1">Clique para visualizar</small>
+							</div>
+						</Card.Body>
+					</Card>
+				</div>
+
+				<button
+					type="button"
+					className="position-fixed d-flex d-md-none align-items-center justify-content-center rounded-circle shadow-lg border-0 bg-primary text-white"
+					style={{
+						...basePosition,
+						width: '64px',
+						height: '64px',
+					}}
+					onClick={handleOpenModal}
+					title="Caso em andamento"
+					aria-label="Abrir caso em andamento"
+					aria-busy={opening}
+				>
+					{opening ? (
+						<Spinner animation="border" variant="light" size="sm" />
+					) : (
+						<IconifyIcon icon="lucide:timer" className="fs-3" />
+					)}
+					<span className="visually-hidden">Abrir caso em andamento</span>
+				</button>
+			</>
 		);
 	})() : null;
 
