@@ -19,7 +19,7 @@ export default function ResumeForm({ caseData }: ResumeFormProps) {
 			methods.reset({
 				codigo: caseData.caso.id,
 				produto: caseData.produto?.nome || '',
-				versao: caseData.caso.campos_adicionais.versao_produto || '',
+				versao: "-",
 				prioridade: caseData.caso.caracteristicas.prioridade || '',
 				desenvolvedor: caseData.caso.usuarios.desenvolvimento?.nome || '',
 				resumo: caseData.caso.textos.descricao_resumo || '',

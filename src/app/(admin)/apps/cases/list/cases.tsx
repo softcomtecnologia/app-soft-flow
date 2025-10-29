@@ -32,7 +32,7 @@ const MobileCaseCard = ({ item, onView }: { item: ICase; onView: (caseId: string
     const caseId = `${item.caso.id}`;
     const developerName = item.caso.usuarios.desenvolvimento?.nome || 'Nao atribuido';
     const productName = item.produto?.nome || '-';
-    const version = item.caso.campos_adicionais.versao_produto || '-';
+    const version = "-";
     const priority = item.caso.caracteristicas.prioridade || 'N/A';
     const status = item.caso.status.descricao;
     const summary = item.caso.textos.descricao_resumo;
@@ -130,7 +130,7 @@ const CasesTable = ({ data, loading }: Props) => {
                                     </td>
 
                                     <td>
-                                        <span className="fw-semibold">{c.caso.campos_adicionais.versao_produto}</span>
+                                        <span className="fw-semibold">-</span>
                                     </td>
 
                                     <td>
