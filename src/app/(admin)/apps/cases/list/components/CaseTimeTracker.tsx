@@ -8,20 +8,62 @@ import Spinner from '@/components/Spinner';
 import { toast } from 'react-toastify';
 import TimetrackerSkelleton from '../skelletons/timetrackerSkelleton';
 import { ACTIVE_CASE_EVENT, ACTIVE_CASE_STORAGE_KEY, ActiveCaseStorageData } from '@/constants/caseTimeTracker';
+import CaseActiveTimeConflictModal from './CaseActiveTimeConflictModal';
 
 interface CaseTimeTrackerProps {
 	caseData?: ICase | null;
 }
 
+type PendingAction = {
+	type: 'start' | 'stop';
+	caseId: string;
+};
+
 export default function CaseTimeTracker({ caseData }: CaseTimeTrackerProps) {
 	const [loading, setLoading] = useState<boolean>(false);
 	const [localCase, setLocalCase] = useState<ICase | null>(caseData ?? null);
 	const [elapsedMinutes, setElapsedMinutes] = useState<number | null>(null);
+	const [conflictModalOpen, setConflictModalOpen] = useState(false);
+	const [conflictCaseId, setConflictCaseId] = useState<string | null>(null);
+	const [conflictMessage, setConflictMessage] = useState<string | null>(null);
+	const [conflictLoading, setConflictLoading] = useState(false);
+	const [pendingAction, setPendingAction] = useState<PendingAction | null>(null);
 	const badgeBaseClass = "d-inline-flex align-items-center gap-1 text-capitalize py-1 px-2 rounded-2";
 
 	useEffect(() => {
 		setLocalCase(caseData ?? null);
 	}, [caseData]);
+
+	const applyStopToCurrentCase = (stopTimeIso: string) => {
+		setLocalCase((prev) => {
+			if (!prev) {
+				return prev;
+			}
+			let closed = false;
+			const updatedEntries = (prev.caso.producao ?? []).map((entry) => {
+				if (!closed && !entry.datas.fechamento) {
+					closed = true;
+					return {
+						...entry,
+						datas: {
+							...entry.datas,
+							fechamento: stopTimeIso,
+						},
+					};
+				}
+				return entry;
+			});
+
+			return {
+				...prev,
+				caso: {
+					...prev.caso,
+					producao: updatedEntries,
+				},
+			};
+		});
+		setElapsedMinutes(null);
+	};
 
 	const getTipoIcon = (tipo: string) => {
 		const normalizedTipo = tipo.toLowerCase().replace(/\s+/g, '_');
@@ -58,18 +100,34 @@ export default function CaseTimeTracker({ caseData }: CaseTimeTrackerProps) {
 			.replace(/\b\w/g, (char) => char.toUpperCase());
 
 
-	const startNewTime = async (id: string) => {
+	const startNewTime = async (id: string, isRetry = false) => {
 		if (!id) {
 			toast.error('Identificador do caso nao encontrado.');
 			return;
 		}
+
+		if (!isRetry) {
+			setPendingAction({ type: 'start', caseId: id });
+		}
+
 		setLoading(true);
 		let shouldAddEntry = false;
+		let conflictDetected = false;
+		let startTimeIso: string | null = null;
+
 		try {
 			const response = await startTimeCase(id);
 			if (response.success) {
 				shouldAddEntry = true;
+				startTimeIso = new Date().toISOString();
 				toast.success(response.message || 'Tempo iniciado com sucesso!');
+			} else if (response.caso_aberto) {
+				conflictDetected = true;
+				setConflictCaseId(String(response.caso_aberto));
+				setConflictMessage(
+					response.message ?? 'Existe um caso com tempo em andamento. Deseja parar esse tempo agora?'
+				);
+				setConflictModalOpen(true);
 			} else {
 				toast.warning(response.message || 'Nao foi possivel iniciar o tempo.');
 			}
@@ -77,8 +135,7 @@ export default function CaseTimeTracker({ caseData }: CaseTimeTrackerProps) {
 			console.error('Erro ao iniciar o tempo:', error);
 			toast.error('Falha ao iniciar o tempo.');
 		} finally {
-			if (shouldAddEntry) {
-				const startTimeIso = new Date().toISOString();
+			if (shouldAddEntry && startTimeIso) {
 				if (typeof window !== 'undefined') {
 					try {
 						window.localStorage.setItem(
@@ -123,22 +180,41 @@ export default function CaseTimeTracker({ caseData }: CaseTimeTrackerProps) {
 					};
 				});
 			}
+			if (!conflictDetected) {
+				setPendingAction(null);
+			}
 			setLoading(false);
 		}
 	};
 
-	const stopCurrentTime = async (id: string) => {
+	const stopCurrentTime = async (id: string, isRetry = false) => {
 		if (!id) {
 			toast.error('Identificador do caso nao encontrado.');
 			return;
 		}
+
+		if (!isRetry) {
+			setPendingAction({ type: 'stop', caseId: id });
+		}
+
 		setLoading(true);
 		let shouldCloseEntry = false;
+		let conflictDetected = false;
+		let stopTimeIso: string | null = null;
+
 		try {
 			const response = await stopTimeCase(id);
 			if (response.success) {
 				shouldCloseEntry = true;
-				toast.success(response.message || 'Tempo Parado com sucesso!');
+				stopTimeIso = new Date().toISOString();
+				toast.success(response.message || 'Tempo parado com sucesso!');
+			} else if (response.caso_aberto) {
+				conflictDetected = true;
+				setConflictCaseId(String(response.caso_aberto));
+				setConflictMessage(
+					response.message ?? 'Existe um caso com tempo em andamento. Deseja parar esse tempo agora?'
+				);
+				setConflictModalOpen(true);
 			} else {
 				toast.warning(response.message || 'Nao foi possivel parar o tempo.');
 			}
@@ -146,8 +222,7 @@ export default function CaseTimeTracker({ caseData }: CaseTimeTrackerProps) {
 			console.error('Erro ao parar o tempo:', error);
 			toast.error('Falha ao parar o tempo.');
 		} finally {
-			if (shouldCloseEntry) {
-				const stopTimeIso = new Date().toISOString();
+			if (shouldCloseEntry && stopTimeIso) {
 				if (typeof window !== 'undefined') {
 					try {
 						window.localStorage.removeItem(ACTIVE_CASE_STORAGE_KEY);
@@ -156,36 +231,106 @@ export default function CaseTimeTracker({ caseData }: CaseTimeTrackerProps) {
 					}
 					window.dispatchEvent(new Event(ACTIVE_CASE_EVENT));
 				}
-				setLocalCase((prev) => {
-					if (!prev) {
-						return prev;
-					}
-					let closed = false;
-					const updatedEntries = (prev.caso.producao ?? []).map((entry) => {
-						if (!closed && !entry.datas.fechamento) {
-							closed = true;
-							return {
-								...entry,
-								datas: {
-									...entry.datas,
-									fechamento: stopTimeIso,
-								},
-							};
-						}
-						return entry;
-					});
-
-					return {
-						...prev,
-						caso: {
-							...prev.caso,
-							producao: updatedEntries,
-						},
-					};
-				});
-				setElapsedMinutes(null);
+				applyStopToCurrentCase(stopTimeIso);
+			}
+			if (!conflictDetected) {
+				setPendingAction(null);
 			}
 			setLoading(false);
+		}
+	};
+
+	const handleCloseConflictModal = () => {
+		if (conflictLoading) {
+			return;
+		}
+		setConflictModalOpen(false);
+		setConflictCaseId(null);
+		setConflictMessage(null);
+		setPendingAction(null);
+		setLoading(false);
+	};
+
+	const retryPendingAction = async () => {
+		if (!pendingAction) {
+			return;
+		}
+
+		if (pendingAction.type === 'start') {
+			await startNewTime(pendingAction.caseId, true);
+		} else {
+			await stopCurrentTime(pendingAction.caseId, true);
+		}
+	};
+
+	const handleStopOpenCase = async () => {
+		if (!conflictCaseId) {
+			return;
+		}
+
+		setConflictLoading(true);
+		try {
+			const response = await stopTimeCase(conflictCaseId);
+			if (response.success) {
+				toast.success(response.message || 'Tempo parado com sucesso!');
+				const stopTimeIso = new Date().toISOString();
+
+				if (typeof window !== 'undefined') {
+					try {
+						const storedValue = window.localStorage.getItem(ACTIVE_CASE_STORAGE_KEY);
+						if (!storedValue) {
+							window.localStorage.removeItem(ACTIVE_CASE_STORAGE_KEY);
+						} else {
+							try {
+								const parsed = JSON.parse(storedValue) as ActiveCaseStorageData;
+								if (!parsed.caseId || String(parsed.caseId) === conflictCaseId) {
+									window.localStorage.removeItem(ACTIVE_CASE_STORAGE_KEY);
+								}
+							} catch (error) {
+								window.localStorage.removeItem(ACTIVE_CASE_STORAGE_KEY);
+							}
+						}
+					} catch (error) {
+						console.error('Erro ao limpar o caso ativo do localStorage:', error);
+					}
+					window.dispatchEvent(new Event(ACTIVE_CASE_EVENT));
+				}
+
+				const currentTrackedCaseId = localCase?.caso?.id
+					? String(localCase.caso.id)
+					: caseData?.caso?.id
+						? String(caseData.caso.id)
+						: null;
+
+				if (currentTrackedCaseId && currentTrackedCaseId === conflictCaseId) {
+					applyStopToCurrentCase(stopTimeIso);
+				}
+
+				setConflictModalOpen(false);
+				setConflictCaseId(null);
+				setConflictMessage(null);
+
+				const pending = pendingAction;
+				if (pending && pending.caseId === conflictCaseId && pending.type === 'stop') {
+					setPendingAction(null);
+					setLoading(false);
+				} else {
+					await retryPendingAction();
+				}
+			} else {
+				toast.warning(response.message || 'Nao foi possivel parar o tempo do caso aberto.');
+				if (response.caso_aberto) {
+					setConflictCaseId(String(response.caso_aberto));
+				}
+				setConflictMessage(
+					response.message ?? 'Existe um caso com tempo em andamento. Deseja tentar novamente?'
+				);
+			}
+		} catch (error) {
+			console.error('Erro ao parar o tempo do caso aberto:', error);
+			toast.error('Falha ao parar o tempo do caso aberto.');
+		} finally {
+			setConflictLoading(false);
 		}
 	};
 
@@ -295,7 +440,8 @@ export default function CaseTimeTracker({ caseData }: CaseTimeTrackerProps) {
 	};
 
 	return (
-		<div className="d-flex flex-column gap-4">
+		<>
+			<div className="d-flex flex-column gap-4">
 			<Card className="border-0 shadow-sm">
 				<Card.Header className="bg-light border-bottom">
 					<h5 className="mb-0 d-flex align-items-center">
@@ -436,7 +582,16 @@ export default function CaseTimeTracker({ caseData }: CaseTimeTrackerProps) {
 					</ListGroup>
 				</Card.Body>
 			</Card>
-		</div>
+			</div>
+			<CaseActiveTimeConflictModal
+				show={conflictModalOpen}
+				caseId={conflictCaseId}
+				message={conflictMessage}
+				loading={conflictLoading}
+				onCancel={handleCloseConflictModal}
+				onConfirm={handleStopOpenCase}
+			/>
+		</>
 	);
 }
 
