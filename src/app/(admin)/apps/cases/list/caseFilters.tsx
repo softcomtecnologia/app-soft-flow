@@ -10,7 +10,9 @@ import Select from 'react-select';
 import Spinner from '@/components/Spinner';
 import { useToggle } from '@/hooks';
 
-const statusOptions = [
+type StatusOption = { value: string; label: string };
+
+const statusOptions: StatusOption[] = [
 { value: 'ATRIBUIDO', label: 'ATRIBUIDO' },
 { value: 'AGUARDANDO TESTE', label: 'AGUARDANDO TESTE' },
 { value: 'CONCLUIDO', label: 'CONCLUIDO' },
@@ -62,7 +64,7 @@ const CaseFilters = () => {
 								/>
 							</Col>
 							<Col xs={12} sm={12} md="auto">
-								<Form.Label className="fw-medium text-muted small">Staus</Form.Label>
+								<Form.Label className="fw-medium text-muted small">Status</Form.Label>
 								<Controller
 									name="status_descricao"
 									control={methods.control}
@@ -102,5 +104,3 @@ const CaseFilters = () => {
 };
 
 export default CaseFilters;
-
-
