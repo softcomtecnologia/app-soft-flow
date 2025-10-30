@@ -50,7 +50,7 @@ export default function MobileCaseCard({ item, onView }: Props) {
 
 			<div className="mt-3">
 				<Button variant="outline-primary" className="w-100" onClick={() => onView(caseId)}>
-					Visualizacao resumida
+					Visualização resumida
 				</Button>
 			</div>
 		</div>

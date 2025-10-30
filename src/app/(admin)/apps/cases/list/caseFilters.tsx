@@ -20,13 +20,15 @@ const CaseFilters = () => {
 	const { fetchCases, loading } = useCasesContext();
 
 	const onSearch = (data: ICaseFilter) => {
-		const payload: ICaseFilter = {
-			...data,
-			numero_caso: data.numero_caso?.trim() || undefined,
-			status_descricao: data.status_descricao || undefined,
-			usuario_dev_id: Cookies.get('user_id'),
-			sort_by: "prioridade",
-		};
+		const trimmedCaseNumber = data.numero_caso?.trim();
+
+		const payload: ICaseFilter = trimmedCaseNumber
+			? { numero_caso: trimmedCaseNumber }
+			: {
+					status_descricao: data.status_descricao || undefined,
+					usuario_dev_id: Cookies.get('user_id'),
+					sort_by: 'prioridade',
+				};
 
 		fetchCases(payload);
 	};

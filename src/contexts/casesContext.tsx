@@ -45,7 +45,11 @@ export const CasesProvider = ({ children }: { children: React.ReactNode }) => {
 	const fetchCases = useCallback(async (data?: ICaseFilter) => {
 		setLoading(true);
 		try {
-			const filters = { ...buildDefaultFilters(), ...data };
+			const caseNumber = data?.numero_caso?.trim();
+			const filters = caseNumber
+				? { numero_caso: caseNumber }
+				: { ...buildDefaultFilters(), ...data };
+
 			const { cursor, ...sanitizedFilters } = filters;
 			const response = await allCase(sanitizedFilters);
 			setCases(response.data);

@@ -144,7 +144,7 @@ const CasesTable = ({ data, loading }: Props) => {
                                         <td>
                                             <DropdownButton variant="light" title={<IconifyIcon icon={"lucide:align-left"} />}>
                                                 <DropdownItem className="text-center" onClick={() => caseEspecifiedModal(`${c.caso.id}`)}>
-                                                    Visualizacao resumida
+                                                    Visualização resumida
                                                 </DropdownItem>
                                             </DropdownButton>
                                         </td>
