@@ -1,9 +1,9 @@
 "use client"
 import IconifyIcon from "@/components/wrappers/IconifyIcon";
-import { useGetTipoBadgeVariant, useGetTipoIcon } from "@/hooks/caseTimeTracker/caseTimeTrackerVarianions";
+import { useGetTipoBadgeVariant as getTipoBadgeVariant, useGetTipoIcon as getTipoIcon } from "@/hooks/caseTimeTracker/caseTimeTrackerVarianions";
 import { formatTipoLabel } from "@/hooks/caseTimeTracker/useFormatLabel";
-import useGetAberturaFechamentoDuration from "@/hooks/caseTimeTracker/useGetAberturaFechamentoDuration";
-import useFormatTimer from "@/hooks/useFormatTimer";
+import getAberturaFechamentoDuration from "@/hooks/caseTimeTracker/useGetAberturaFechamentoDuration";
+import formatTimer from "@/hooks/useFormatTimer";
 import { Producao } from "@/types/cases/ICase";
 import { Badge, Card, ListGroup } from "react-bootstrap";
 
@@ -26,7 +26,7 @@ export default function CaseTimeTrackerHistory({historyEntries}:Props) {
 					<ListGroup variant="flush">
 						{historyEntries.length ? (
 							historyEntries.map((entry, index) => {
-								const duration = useGetAberturaFechamentoDuration(entry.datas.abertura, entry.datas.fechamento);
+								const duration = getAberturaFechamentoDuration(entry.datas.abertura, entry.datas.fechamento);
 
 								return (
 									<ListGroup.Item
@@ -35,16 +35,16 @@ export default function CaseTimeTrackerHistory({historyEntries}:Props) {
 									>
 										<div className="d-flex flex-column gap-1">
 											<Badge
-												bg={useGetTipoBadgeVariant(entry.tipo)}
+												bg={getTipoBadgeVariant(entry.tipo)}
 												className={badgeBaseClass}
 												style={{ fontSize: '0.78rem', width: '60%' }}
 											>
-												<IconifyIcon icon={useGetTipoIcon(entry.tipo)}/>
+												<IconifyIcon icon={getTipoIcon(entry.tipo)}/>
 												{formatTipoLabel(entry.tipo)}
 											</Badge>
 											<small className="text-muted">
-												{useFormatTimer(entry.datas.abertura)}
-												{entry.datas.fechamento && ` - ${useFormatTimer(entry.datas.fechamento)}`}
+												{formatTimer(entry.datas.abertura)}
+												{entry.datas.fechamento && ` - ${formatTimer(entry.datas.fechamento)}`}
 											</small>
 										</div>
 										{duration && (

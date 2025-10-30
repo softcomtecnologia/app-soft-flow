@@ -2,8 +2,7 @@
 import IconifyIcon from "@/components/wrappers/IconifyIcon";
 import { useGetTipoBadgeVariant, useGetTipoIcon } from "@/hooks/caseTimeTracker/caseTimeTrackerVarianions";
 import { formatTipoLabel } from "@/hooks/caseTimeTracker/useFormatLabel";
-import { Badge, Button, Card, Col, Row } from "react-bootstrap";
-import Spinner from '@/components/Spinner';
+import { Badge, Button, Card, Col, Row, Spinner } from "react-bootstrap";
 
 type Props = {
     stopCurrentTime: (id: string, isRetry?: boolean) => Promise<void>,
@@ -92,7 +91,12 @@ export default function CaseTimeTrackerTimeControl({
 												loading ?
 													<span className="d-flex align-items-center gap-2">
 														<span>Parar tempo</span>
-														<Spinner className="spinner-grow-sm" tag="span" color="white" type="bordered" />
+														<Spinner
+															as="span"
+															animation="border"
+															variant="light"
+															size="sm"
+														/>
 													</span>
 													:
 													'Parar tempo'
@@ -110,7 +114,12 @@ export default function CaseTimeTrackerTimeControl({
 												loading ?
 													<span className="d-flex align-items-center gap-2">
 														<span>Iniciar tempo</span>
-														<Spinner className="spinner-grow-sm" tag="span" color="white" type="bordered" />
+														<Spinner
+															as="span"
+															animation="border"
+															variant="light"
+															size="sm"
+														/>
 													</span>
 													:
 													'Iniciar tempo'
