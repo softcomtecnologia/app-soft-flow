@@ -2,7 +2,8 @@
 import IconifyIcon from "@/components/wrappers/IconifyIcon";
 import { useGetTipoBadgeVariant, useGetTipoIcon } from "@/hooks/caseTimeTracker/caseTimeTrackerVarianions";
 import { formatTipoLabel } from "@/hooks/caseTimeTracker/useFormatLabel";
-import { Badge, Button, Card, Col, Row, Spinner } from "react-bootstrap";
+import { Badge, Button, Card, Col, Row } from "react-bootstrap";
+import Spinner from '@/components/Spinner';
 
 type Props = {
     stopCurrentTime: (id: string, isRetry?: boolean) => Promise<void>,
