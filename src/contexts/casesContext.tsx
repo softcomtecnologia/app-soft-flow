@@ -1,7 +1,7 @@
-'use client';
-import { createContext, useContext, useState, useEffect } from 'react';
+﻿'use client';
+import { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { allCase, findCase } from '@/services/caseServices';
-import { ICase, ICaseEspecifiedResponse } from '@/types/cases/ICase';
+import { ICase, ICaseEspecifiedResponse, ICaseResponse } from '@/types/cases/ICase';
 import { toast } from 'react-toastify';
 import ICaseFilter from '@/types/cases/ICaseFilter';
 import Cookies from 'js-cookie';
@@ -9,7 +9,10 @@ import Cookies from 'js-cookie';
 interface CasesContextType {
 	cases: ICase[];
 	loading: boolean;
-	fetchCases: (data?: ICaseFilter) => void;
+	loadingMore: boolean;
+	pagination: ICaseResponse['pagination'] | null;
+	fetchCases: (data?: ICaseFilter) => Promise<void>;
+	loadMoreCases: () => Promise<void>;
 	fetchEspecifiedCases: (id: string) => Promise<ICaseEspecifiedResponse | undefined>;
 }
 
@@ -26,26 +29,55 @@ export function useCasesContext() {
 export const CasesProvider = ({ children }: { children: React.ReactNode }) => {
 	const [cases, setCases] = useState<ICase[]>([]);
 	const [loading, setLoading] = useState<boolean>(false);
+	const [loadingMore, setLoadingMore] = useState<boolean>(false);
+	const [pagination, setPagination] = useState<ICaseResponse['pagination'] | null>(null);
+	const [currentFilters, setCurrentFilters] = useState<ICaseFilter | undefined>(undefined);
 
-	const fetchCases = async (data?: ICaseFilter) => {
+	const buildDefaultFilters = useCallback((): ICaseFilter => {
+		const userId = Cookies.get('user_id');
+		return {
+			usuario_dev_id: userId,
+			sort_by: 'prioridade',
+			status_descricao: 'ATRIBUIDO',
+		};
+	}, []);
+
+	const fetchCases = useCallback(async (data?: ICaseFilter) => {
 		setLoading(true);
 		try {
-			if (!data) {
-				const userId = Cookies.get("user_id");
-				data = {
-					usuario_dev_id: userId,
-					sort_by: "prioridade",
-					status_descricao: "ATRIBUÍDO",
-				};
-			}
-			const response = await allCase(data);
+			const filters = { ...buildDefaultFilters(), ...data };
+			const { cursor, ...sanitizedFilters } = filters;
+			const response = await allCase(sanitizedFilters);
 			setCases(response.data);
+			setPagination(response.pagination ?? null);
+			setCurrentFilters(sanitizedFilters);
 		} catch (error) {
-			toast.error("Não foi possível obter os dados");
+			toast.error('Nao foi possivel obter os dados');
 		} finally {
 			setLoading(false);
 		}
-	};
+	}, [buildDefaultFilters]);
+
+	const loadMoreCases = useCallback(async () => {
+		if (!pagination?.has_more || !pagination.next_cursor || loadingMore) {
+			return;
+		}
+
+		setLoadingMore(true);
+		try {
+			const baseFilters = currentFilters ?? buildDefaultFilters();
+			const response = await allCase({
+				...baseFilters,
+				cursor: pagination.next_cursor,
+			});
+			setCases((prevCases) => [...prevCases, ...response.data]);
+			setPagination(response.pagination ?? null);
+		} catch (error) {
+			toast.error('Nao foi possivel obter mais casos');
+		} finally {
+			setLoadingMore(false);
+		}
+	}, [buildDefaultFilters, currentFilters, loadingMore, pagination]);
 
 	const fetchEspecifiedCases = async (id: string):Promise<ICaseEspecifiedResponse | undefined> => {
 
@@ -53,7 +85,7 @@ export const CasesProvider = ({ children }: { children: React.ReactNode }) => {
 			const response = await findCase(id);
 			return response;
 		} catch (error) {
-			toast.error("Não foi possível obter os dados do caso");
+			toast.error('Nao foi possivel obter os dados do caso');
 		} finally {
 			setLoading(false);
 		}
@@ -61,11 +93,12 @@ export const CasesProvider = ({ children }: { children: React.ReactNode }) => {
 
 	useEffect(() => {
 		fetchCases();
-	}, []);
+	}, [fetchCases]);
 
 	return (
-		<CasesContext.Provider value={{ cases, loading, fetchCases, fetchEspecifiedCases }}>
+		<CasesContext.Provider value={{ cases, loading, loadingMore, pagination, fetchCases, loadMoreCases, fetchEspecifiedCases }}>
 			{children}
 		</CasesContext.Provider>
 	);
 };
+

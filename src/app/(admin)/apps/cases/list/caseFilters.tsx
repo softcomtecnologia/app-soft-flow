@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { TextInput } from '@/components/Form';
 import { Button, Col, Form, Row } from 'react-bootstrap';
@@ -10,7 +10,7 @@ import Select from 'react-select';
 import Spinner from '@/components/Spinner';
 
 const statusOptions = [
-{ value: 'ATRIBUÍDO', label: 'ATRIBUIDO' },
+{ value: 'ATRIBUIDO', label: 'ATRIBUIDO' },
 { value: 'AGUARDANDO TESTE', label: 'AGUARDANDO TESTE' },
 { value: 'CONCLUIDO', label: 'CONCLUIDO' },
 ];
@@ -84,4 +84,5 @@ const CaseFilters = () => {
 };
 
 export default CaseFilters;
+
 

@@ -152,6 +152,12 @@ export interface Producao {
 
 export interface ICaseResponse {
 	data: ICase[];
+	pagination: {
+		has_more: boolean
+		next_cursor: "string" 
+		per_page: number
+		prev_cursor: number | null
+	}
 }
 
 export interface ICaseEspecifiedResponse {
