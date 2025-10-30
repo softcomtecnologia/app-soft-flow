@@ -5,6 +5,7 @@ import ResumeForm from '@/app/(admin)/apps/cases/form/resumeForm/resumeForm';
 import CaseTimeTracker from './components/CaseTimeTracker';
 import IconifyIcon from '@/components/wrappers/IconifyIcon';
 import TimetrackerSkelleton from "./skelletons/timetrackerSkelleton";
+import { CASE_CONFLICT_MODAL_CLOSE_EVENT, CASE_RESUME_MODAL_FORCE_CLOSE_EVENT } from '@/constants/caseTimeTracker';
 
 interface Props {
 	open: boolean;
@@ -14,9 +15,17 @@ interface Props {
 
 export default function CasesModalResume({ setOpen, open, case: caseData }: Props) {
 
+	const handleClose = () => {
+		if (typeof window !== 'undefined') {
+			window.dispatchEvent(new Event(CASE_CONFLICT_MODAL_CLOSE_EVENT));
+			window.dispatchEvent(new Event(CASE_RESUME_MODAL_FORCE_CLOSE_EVENT));
+		}
+		setOpen(false);
+	};
+
 	return (
 		<>
-			<Modal show={open} onHide={() => setOpen(false)} size="xl" backdrop="static" fullscreen="sm-down">
+			<Modal show={open} onHide={handleClose} size="xl" backdrop="static" fullscreen="sm-down">
 				<Modal.Header closeButton className="bg-primary text-white">
 					<div className="d-flex align-items-center">
 						<IconifyIcon icon="lucide:file-text" className="me-2" />
@@ -68,9 +77,8 @@ export default function CasesModalResume({ setOpen, open, case: caseData }: Prop
 									</Tab.Pane>
 									<Tab.Pane eventKey="tempo">
 										{
-											!caseData ? <TimetrackerSkelleton/> : <CaseTimeTracker caseData={caseData} />
+											!caseData ? <TimetrackerSkelleton/> : <CaseTimeTracker key={caseData.caso.id} caseData={caseData} />
 										}
-										
 									</Tab.Pane>
 								</Tab.Content>
 							</div>
@@ -78,7 +86,7 @@ export default function CasesModalResume({ setOpen, open, case: caseData }: Prop
 					</Tab.Container>
 				</Modal.Body>
 				<Modal.Footer className="bg-light border-top">
-					<Button variant="secondary" onClick={() => setOpen(false)} className="d-flex align-items-center">
+					<Button variant="secondary" onClick={handleClose} className="d-flex align-items-center">
 						<IconifyIcon icon="lucide:x" className="me-1" />
 						Fechar
 					</Button>

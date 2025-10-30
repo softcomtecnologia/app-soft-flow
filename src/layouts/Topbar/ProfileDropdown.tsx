@@ -25,7 +25,7 @@ const ProfileDropdown = ({ username, menuItems, userImage }: ProfileDropdownProp
 				className="nav-link dropdown-toggle arrow-none nav-user px-2"
 			>
 				<span className="account-user-avatar">
-					<Image src={userImage} className="rounded-circle" width={32} alt="user" />
+					<i className="ri-user-line text-primary fs-3 mb-2"></i>
 				</span>
 				<span className="d-lg-flex flex-column gap-1 d-none">
 					<h5 className="my-0">{username}</h5>

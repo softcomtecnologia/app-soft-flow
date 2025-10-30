@@ -5,7 +5,8 @@ import ListSkelleton from '@/app/(admin)/apps/cases/list/skelletons/listSkelleto
 import IconifyIcon from '@/components/wrappers/IconifyIcon';
 import { useCasesContext } from '@/contexts/casesContext';
 import CasesModalResume from '@/app/(admin)/apps/cases/list/casesModalResume';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { CASE_CONFLICT_MODAL_CLOSE_EVENT, CASE_RESUME_MODAL_FORCE_CLOSE_EVENT } from '@/constants/caseTimeTracker';
 
 type Props = {
     data: ICase[] | null;
@@ -82,7 +83,32 @@ const CasesTable = ({ data, loading }: Props) => {
     const [openResumeModal, setOpenResumeModal] = useState(false);
     const [especifiedCase, setEspecifiedCase] = useState<ICase | null>(null);
 
+    useEffect(() => {
+        if (typeof window === 'undefined') {
+            return;
+        }
+
+        const handleForceClose = () => {
+            setOpenResumeModal(false);
+        };
+
+        window.addEventListener(CASE_RESUME_MODAL_FORCE_CLOSE_EVENT, handleForceClose);
+        return () => {
+            window.removeEventListener(CASE_RESUME_MODAL_FORCE_CLOSE_EVENT, handleForceClose);
+        };
+    }, []);
+
+    useEffect(() => {
+        if (!openResumeModal) {
+            setEspecifiedCase(null);
+        }
+    }, [openResumeModal]);
+
     const caseEspecifiedModal = (id: string) => {
+        if (typeof window !== 'undefined') {
+            window.dispatchEvent(new Event(CASE_CONFLICT_MODAL_CLOSE_EVENT));
+            window.dispatchEvent(new Event(CASE_RESUME_MODAL_FORCE_CLOSE_EVENT));
+        }
         setEspecifiedCase(null);
         fetchEspecifiedCases(id).then((response) => {
             if (response) {

@@ -136,7 +136,7 @@ interface ProjetoCaso {
 	};
 }
 
-interface Producao {
+export interface Producao {
 	sequencia: number;
 	registro: number;
 	datas: {

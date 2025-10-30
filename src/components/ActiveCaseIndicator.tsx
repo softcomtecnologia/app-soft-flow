@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { Card, Spinner } from 'react-bootstrap';
 import IconifyIcon from '@/components/wrappers/IconifyIcon';
-import { ACTIVE_CASE_EVENT, ACTIVE_CASE_STORAGE_KEY, ActiveCaseStorageData } from '@/constants/caseTimeTracker';
+import { ACTIVE_CASE_EVENT, ACTIVE_CASE_STORAGE_KEY, CASE_CONFLICT_MODAL_CLOSE_EVENT, CASE_RESUME_MODAL_FORCE_CLOSE_EVENT, ActiveCaseStorageData } from '@/constants/caseTimeTracker';
 import CasesModalResume from '@/app/(admin)/apps/cases/list/casesModalResume';
 import { ICase } from '@/types/cases/ICase';
 import { findCase } from '@/services/caseServices';
@@ -60,6 +60,21 @@ export default function ActiveCaseIndicator() {
 	}, []);
 
 	useEffect(() => {
+		if (typeof window === 'undefined') {
+			return;
+		}
+
+		const handleForceClose = () => {
+			setModalOpen(false);
+		};
+
+		window.addEventListener(CASE_RESUME_MODAL_FORCE_CLOSE_EVENT, handleForceClose);
+		return () => {
+			window.removeEventListener(CASE_RESUME_MODAL_FORCE_CLOSE_EVENT, handleForceClose);
+		};
+	}, []);
+
+	useEffect(() => {
 		if (!modalOpen) {
 			setModalCase(null);
 		}
@@ -72,6 +87,10 @@ export default function ActiveCaseIndicator() {
 
 		setOpening(true);
 		try {
+			if (typeof window !== 'undefined') {
+				window.dispatchEvent(new Event(CASE_CONFLICT_MODAL_CLOSE_EVENT));
+				window.dispatchEvent(new Event(CASE_RESUME_MODAL_FORCE_CLOSE_EVENT));
+			}
 			const response = await findCase(activeCase.caseId);
 			if (response?.data) {
 				setModalCase(response.data);
