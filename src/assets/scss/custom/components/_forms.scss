@@ -46,6 +46,17 @@ select.form-control-sm {
     }
 }
 
+.filter-search-button {
+    min-height: var(--ct-form-control-height-sm, 31px);
+    height: var(--ct-form-control-height-sm, 31px);
+    padding-top: 0;
+    padding-bottom: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--ct-btn-font-size-sm, 0.8125rem);
+}
+
 // Show/Hide Password
 .password-eye {
     cursor: pointer;

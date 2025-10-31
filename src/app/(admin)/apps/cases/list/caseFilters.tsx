@@ -263,7 +263,7 @@ const CaseFilters = () => {
 								/>
 							</Col>
 							<Col xs={12} sm={6} md={4} lg={2} className="d-grid">
-								<Button type="submit" variant="primary" disabled={loading} className="w-100">
+								<Button type="submit" variant="primary" size="sm" disabled={loading} className="filter-search-button w-100">
 									{
 										loading ?
 										<span className='text-center'>
