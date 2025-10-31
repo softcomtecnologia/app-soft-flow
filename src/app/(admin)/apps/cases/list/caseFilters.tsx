@@ -31,7 +31,7 @@ const statusOptions: StatusOption[] = [
 const CaseFilters = () => {
 	const methods = useForm<ICaseFilter>();
 	const { fetchCases, loading } = useCasesContext();
-	const [showFilters, toggleFilters] = useToggle(false);
+	const [showFilters, toggleFilters] = useToggle(true);
 	const produtoId = methods.watch('produto_id');
 	const projetoId = methods.watch('projeto_id');
 	const usuarioId = methods.watch('usuario_id');
@@ -134,7 +134,7 @@ const CaseFilters = () => {
 						)}
 					</div>
 					<CasesModal
-						containerClassName="d-inline-flex ms-auto"
+						containerClassName="d-flex ms-sm-auto justify-content-sm-end"
 						buttonProps={{
 							size: 'sm',
 						}}

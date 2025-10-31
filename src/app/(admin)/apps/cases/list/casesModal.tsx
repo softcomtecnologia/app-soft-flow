@@ -5,6 +5,7 @@ import { Button, Modal } from "react-bootstrap";
 import type { ButtonProps } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import CaseWizard from "../form/wizard/caseWizard";
+import styles from "./casesModal.module.scss";
 
 type CasesModalProps = {
 	containerClassName?: string;
@@ -26,13 +27,14 @@ export default function CasesModal({
     };
 
 	const { className: additionalButtonClassName, variant: customVariant, ...restButtonProps } = buttonProps ?? {};
-	const mergedButtonClassName = ["d-inline-flex align-items-center", buttonClassName, additionalButtonClassName]
+	const containerClasses = [styles.container, containerClassName].filter(Boolean).join(" ");
+	const mergedButtonClassName = [styles.button, "d-inline-flex align-items-center justify-content-center", buttonClassName, additionalButtonClassName]
 		.filter(Boolean)
 		.join(" ");
 
     return (
         <>
-            <div className={containerClassName}>
+            <div className={containerClasses}>
                 <Button
                     variant={customVariant ?? "primary"}
                     onClick={() => openModalWithClass("modal-full-width")}

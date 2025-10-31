@@ -37,6 +37,45 @@ export default function ActiveCaseIndicator() {
 	const [modalOpen, setModalOpen] = useState<boolean>(false);
 	const [modalCase, setModalCase] = useState<ICase | null>(null);
 	const [opening, setOpening] = useState<boolean>(false);
+	const [elapsedTime, setElapsedTime] = useState<string | null>(null);
+
+	const formatElapsedTime = (startedAt: string) => {
+		const start = new Date(startedAt).getTime();
+		const now = Date.now();
+		const diffMs = Math.max(now - start, 0);
+
+		const totalSeconds = Math.floor(diffMs / 1000);
+		const hours = Math.floor(totalSeconds / 3600)
+			.toString()
+			.padStart(2, '0');
+		const minutes = Math.floor((totalSeconds % 3600) / 60)
+			.toString()
+			.padStart(2, '0');
+		const seconds = Math.floor(totalSeconds % 60)
+			.toString()
+			.padStart(2, '0');
+
+		return `${hours}:${minutes}:${seconds}`;
+	};
+
+	useEffect(() => {
+		if (!activeCase?.startedAt) {
+			setElapsedTime(null);
+			return;
+		}
+
+		const updateElapsedTime = () => {
+			setElapsedTime(formatElapsedTime(activeCase.startedAt));
+		};
+
+		updateElapsedTime();
+
+		const intervalId = window.setInterval(updateElapsedTime, 1000);
+
+		return () => {
+			window.clearInterval(intervalId);
+		};
+	}, [activeCase?.startedAt]);
 
 	useEffect(() => {
 		const handleStorageChange = (event: StorageEvent) => {
@@ -142,6 +181,9 @@ export default function ActiveCaseIndicator() {
 								<strong className="small text-uppercase text-white-50">Caso em andamento</strong>
 								<span className="fw-semibold">Caso #{caseId}</span>
 								<small className="text-white-75">Iniciado em {startedLabel}</small>
+								{elapsedTime && (
+									<small className="text-white-75">Tempo decorrido: {elapsedTime}</small>
+								)}
 								<small className="text-white-50 mt-1">Clique para visualizar</small>
 							</div>
 						</Card.Body>
@@ -150,21 +192,24 @@ export default function ActiveCaseIndicator() {
 
 				<button
 					type="button"
-					className="position-fixed d-flex d-md-none align-items-center justify-content-center rounded-circle shadow-lg border-0 bg-primary text-white"
+					className="position-fixed d-flex d-md-none flex-column align-items-center justify-content-center gap-1 rounded shadow-lg border-0 bg-primary text-white px-3 py-2"
 					style={{
 						...basePosition,
-						width: '64px',
+						minWidth: '64px',
 						height: '64px',
 					}}
 					onClick={handleOpenModal}
-					title="Caso em andamento"
+					title={elapsedTime ? `Caso em andamento - ${elapsedTime}` : 'Caso em andamento'}
 					aria-label="Abrir caso em andamento"
 					aria-busy={opening}
 				>
 					{opening ? (
 						<Spinner animation="border" variant="light" size="sm" />
 					) : (
-						<IconifyIcon icon="lucide:timer" className="fs-3" />
+						<>
+							<IconifyIcon icon="lucide:timer" className="fs-5" />
+							{elapsedTime && <small className="text-white-75 lh-1">{elapsedTime}</small>}
+						</>
 					)}
 					<span className="visually-hidden">Abrir caso em andamento</span>
 				</button>
