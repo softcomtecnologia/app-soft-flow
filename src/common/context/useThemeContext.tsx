@@ -1,8 +1,9 @@
 'use client';
-import { ReactNode, createContext, useCallback, useContext, useState } from 'react';
+import { ReactNode, createContext, useCallback, useContext, useEffect, useState } from 'react';
 import i18n, { isValidLanguage, Languages } from '@/common/languages/i18n';
 
 const ThemeContext = createContext<any>({});
+const THEME_STORAGE_KEY = 'theme_preference';
 
 export const ThemeSettings = {
 	layout: {
@@ -38,27 +39,46 @@ export function useThemeContext() {
 	return context;
 }
 
+function getStoredTheme(defaultTheme: string) {
+	if (typeof window === 'undefined') {
+		return defaultTheme;
+	}
+	const storedTheme = window.localStorage.getItem(THEME_STORAGE_KEY);
+	return storedTheme === ThemeSettings.theme.dark || storedTheme === ThemeSettings.theme.light
+		? storedTheme
+		: defaultTheme;
+}
+
 export function ThemeProvider({ children }: { children: ReactNode }) {
 	const [currentLanguage, setCurrentLanguage] = useState(Languages.EN);
 
-	const [settings, setSettings] = useState({
-		layout: {
-			type: ThemeSettings.layout.type.vertical,
-			mode: ThemeSettings.layout.mode.fluid,
-			menuPosition: ThemeSettings.layout.menuPosition.fixed,
-		},
-		theme: ThemeSettings.theme.light,
-		topbar: {
-			theme: ThemeSettings.topbar.theme.light,
-			logo: ThemeSettings.topbar.logo.show,
-		},
-		sidebar: {
-			theme: ThemeSettings.sidebar.theme.dark,
-			size: ThemeSettings.sidebar.size.default,
-			user: ThemeSettings.sidebar.user.hidden,
-		},
-		rightSidebar: ThemeSettings.rightSidebar.hidden,
+	const [settings, setSettings] = useState(() => {
+		const initialTheme = getStoredTheme(ThemeSettings.theme.light);
+		return {
+			layout: {
+				type: ThemeSettings.layout.type.vertical,
+				mode: ThemeSettings.layout.mode.fluid,
+				menuPosition: ThemeSettings.layout.menuPosition.fixed,
+			},
+			theme: initialTheme,
+			topbar: {
+				theme: ThemeSettings.topbar.theme.light,
+				logo: ThemeSettings.topbar.logo.show,
+			},
+			sidebar: {
+				theme: ThemeSettings.sidebar.theme.dark,
+				size: ThemeSettings.sidebar.size.default,
+				user: ThemeSettings.sidebar.user.hidden,
+			},
+			rightSidebar: ThemeSettings.rightSidebar.hidden,
+		};
 	});
+
+	useEffect(() => {
+		if (typeof window !== 'undefined') {
+			window.localStorage.setItem(THEME_STORAGE_KEY, settings.theme);
+		}
+	}, [settings.theme]);
 
 	const changeLanguage = useCallback((lang: string) => {
 		if (isValidLanguage(lang)) {
