@@ -3,6 +3,7 @@ export default interface ICaseFilter {
 	usuario_dev_id?: string,
 	status_descricao?: string,
 	produto_id?: string,
+	usuario_id?: string,
 	sort_by?: string,
 	cursor?: string,
 }

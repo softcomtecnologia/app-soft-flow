@@ -12,7 +12,9 @@ import AsyncSelect from 'react-select/async';
 import { useAsyncSelect, useToggle } from '@/hooks';
 import { useEffect } from 'react';
 import { assistant as fetchProducts } from '@/services/productsServices';
+import { assistant as fetchUsers } from '@/services/usersServices';
 import IProductAssistant from '@/types/assistant/IProductAssistant';
+import IUserAssistant from '@/types/assistant/IUserAssistant';
 import type { AsyncSelectOption } from '@/hooks/useAsyncSelect';
 
 type StatusOption = { value: string; label: string };
@@ -28,6 +30,7 @@ const CaseFilters = () => {
 	const { fetchCases, loading } = useCasesContext();
 	const [showFilters, toggleFilters] = useToggle(false);
 	const produtoId = methods.watch('produto_id');
+	const usuarioId = methods.watch('usuario_id');
 
 	const {
 		loadOptions: loadProductOptions,
@@ -40,23 +43,40 @@ const CaseFilters = () => {
 		debounceMs: 1000,
 	});
 
+	const {
+		loadOptions: loadUserOptions,
+		selectedOption: selectedUser,
+		setSelectedOption: setSelectedUser,
+	} = useAsyncSelect<IUserAssistant>({
+		fetchItems: async (input) => fetchUsers({ search: input, nome_suporte: input }),
+		getOptionLabel: (user) => user.nome_suporte || user.setor || 'Usuario sem nome',
+		getOptionValue: (user) => user.id,
+		debounceMs: 1000,
+	});
+
 	useEffect(() => {
 		if (!produtoId) {
 			setSelectedProduct(null);
 		}
 	}, [produtoId, setSelectedProduct]);
 
+	useEffect(() => {
+		if (!usuarioId) {
+			setSelectedUser(null);
+		}
+	}, [usuarioId, setSelectedUser]);
+
 	const onSearch = (data: ICaseFilter) => {
 		const trimmedCaseNumber = data.numero_caso?.trim();
-
+		console.log(data.usuario_id);
 		const payload: ICaseFilter = trimmedCaseNumber
 			? { numero_caso: trimmedCaseNumber }
-			: {
-					status_descricao: data.status_descricao || undefined,
-					produto_id: data.produto_id || undefined,
-					usuario_dev_id: Cookies.get('user_id'),
-					sort_by: 'prioridade',
-				};
+					: {
+							status_descricao: data.status_descricao || undefined,
+							produto_id: data.produto_id || undefined,
+							usuario_dev_id: data.usuario_id && data.usuario_id != "" ? data.usuario_id : Cookies.get('user_id'),
+							sort_by: 'prioridade',
+						};
 
 		fetchCases(payload);
 	};
@@ -76,8 +96,8 @@ const CaseFilters = () => {
 				</div>
 				<Collapse in={showFilters}>
 					<div>
-						<Row className="gy-3 gx-3 align-items-end">
-							<Col xs={12} sm={6} md="auto">
+						<Row className="g-3 g-lg-4 align-items-end">
+							<Col xs={12} sm={6} md={4} lg={3}>
 								<Form.Label className="fw-medium text-muted small">Numero do caso</Form.Label>
 								<TextInput
 									{...methods.register('numero_caso')}
@@ -87,7 +107,7 @@ const CaseFilters = () => {
 									className="form-control-sm"
 								/>
 							</Col>
-								<Col xs={12} sm={12} md="auto">
+							<Col xs={12} sm={6} md={6} lg={3}>
 								<Form.Label className="fw-medium text-muted small">Produto</Form.Label>
 								<Controller
 									name="produto_id"
@@ -114,7 +134,34 @@ const CaseFilters = () => {
 									)}
 								/>
 							</Col>
-							<Col xs={12} sm={12} md="auto">
+							<Col xs={12} sm={6} md={6} lg={3}>
+								<Form.Label className="fw-medium text-muted small">Usuario</Form.Label>
+								<Controller
+									name="usuario_id"
+									control={methods.control}
+									render={({ field }) => (
+										<AsyncSelect<AsyncSelectOption<IUserAssistant>, false>
+											cacheOptions
+											defaultOptions={selectedUser ? [selectedUser] : []}
+											loadOptions={loadUserOptions}
+											inputId="usuario-id"
+											className="react-select case-status-select"
+											classNamePrefix="react-select"
+											placeholder="Pesquise um usuario..."
+											isClearable
+											value={selectedUser}
+											onChange={(option) => {
+												setSelectedUser(option);
+												field.onChange(option?.value ?? '');
+											}}
+											onBlur={field.onBlur}
+											noOptionsMessage={() => 'Nenhum usuario encontrado'}
+											loadingMessage={() => 'Carregando...'}
+										/>
+									)}
+								/>
+							</Col>
+							<Col xs={12} sm={6} md={6} lg={3}>
 								<Form.Label className="fw-medium text-muted small">Status</Form.Label>
 								<Controller
 									name="status_descricao"
@@ -125,7 +172,7 @@ const CaseFilters = () => {
 											className="react-select case-status-select"
 											classNamePrefix="react-select"
 											options={statusOptions}
-											placeholder="Selecione..."
+											placeholder="Selecione um status..."
 											isClearable
 											value={statusOptions.find((option) => option.value === field.value) ?? null}
 											onChange={(option) => field.onChange(option?.value ?? '')}
@@ -133,8 +180,8 @@ const CaseFilters = () => {
 									)}
 								/>
 							</Col>
-							<Col xs={12} sm="auto" className="d-grid gap-2 d-sm-inline-flex">
-								<Button type="submit" variant="primary" disabled={loading}>
+							<Col xs={12} sm={6} md={4} lg={2} className="d-grid">
+								<Button type="submit" variant="primary" disabled={loading} className="w-100">
 									{
 										loading ?
 										<span className='text-center'>

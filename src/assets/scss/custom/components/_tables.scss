@@ -49,6 +49,32 @@
     }
 }
 
+.cases-table {
+    th,
+    td {
+        padding-block: 0.5rem !important;
+        padding-inline: 0.75rem !important;
+    }
+
+    thead th {
+        padding-block: 0.75rem !important;
+    }
+
+    tbody tr {
+        border-color: rgba(var(--#{$prefix}dark-rgb), 0.08);
+    }
+}
+
+.cases-table__actions .dropdown-menu {
+    min-width: 8rem;
+}
+
+.cases-table__action {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 // Tables fluid
 .table-nowrap {
 

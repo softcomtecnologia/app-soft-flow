@@ -88,17 +88,17 @@ const CasesTable = ({ data, loading }: Props) => {
     return (
         <>
             <div className="d-none d-md-block">
-                <Table responsive className="table-centered table-nowrap mb-0">
-                    <thead className="table-light">
+                <Table responsive size="sm" className="table-centered table-nowrap table-sm align-middle mb-0 cases-table">
+                    <thead className="table-light text-muted">
                         <tr>
-                            <th>Numero do Caso</th>
-                            <th>Atribuido</th>
-                            <th>Produto</th>
-                            <th>Versao</th>
-                            <th>Prioridade</th>
-                            <th>Descricao / Resumo</th>
-                            <th>Status</th>
-                            <th style={{ width: '125px' }}>Ações</th>
+                            <th className="py-3">Numero do Caso</th>
+                            <th className="py-3">Atribuido</th>
+                            <th className="py-3">Produto</th>
+                            <th className="py-3">Versao</th>
+                            <th className="py-3">Prioridade</th>
+                            <th className="py-3">Descricao / Resumo</th>
+                            <th className="py-3">Status</th>
+                            <th className="py-3 text-center" style={{ width: '125px' }}>Ações</th>
                         </tr>
                     </thead>
 
@@ -108,41 +108,41 @@ const CasesTable = ({ data, loading }: Props) => {
                         ) : (data || []).length ? (
                             <>
                                 {(data || []).map((c, index) => (
-                                    <tr key={`${c.caso.id}-${index}`}>
-                                        <td>
+                                    <tr key={`${c.caso.id}-${index}`} className="align-middle">
+                                        <td className="py-2">
                                             <Link href="#" className="text-body fw-bold">
                                                 {c.caso.id}
                                             </Link>
                                         </td>
 
-                                        <td>
+                                        <td className="py-2">
                                             <span className="text-muted">{c.caso.usuarios.desenvolvimento?.nome}</span>
                                         </td>
 
-                                        <td>
+                                        <td className="py-2">
                                             <span className="text-muted">{c.produto?.nome}</span>
                                         </td>
 
-                                        <td>
+                                        <td className="py-2">
                                             <span className="fw-semibold">-</span>
                                         </td>
 
-                                        <td>
+                                        <td className="py-2">
                                             <span className="text-muted">{c.caso.caracteristicas.prioridade}</span>
                                         </td>
 
-                                        <td style={{ maxWidth: 360 }}>
+                                        <td className="py-2" style={{ maxWidth: 360 }}>
                                             <p className="mb-0 text-truncate" title={c.caso.textos.descricao_resumo}>
                                                 {c.caso.textos.descricao_resumo}
                                             </p>
                                         </td>
 
-                                        <td>
-                                            <h5 className="my-0">{c.caso.status.descricao}</h5>
+                                        <td className="py-2">
+                                            <h5 className="my-0 fs-6">{c.caso.status.descricao ? c.caso.status.descricao.toUpperCase() : ""}</h5>
                                         </td>
 
-                                        <td>
-                                            <DropdownButton variant="light" title={<IconifyIcon icon={"lucide:align-left"} />}>
+                                        <td className="py-2 text-center position-relative">
+                                                                            <DropdownButton size="sm" variant="light" title={<IconifyIcon icon={"lucide:align-left"} />}>
                                                 <DropdownItem className="text-center" onClick={() => caseEspecifiedModal(`${c.caso.id}`)}>
                                                     Visualização resumida
                                                 </DropdownItem>
