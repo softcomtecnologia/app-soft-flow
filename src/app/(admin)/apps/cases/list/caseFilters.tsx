@@ -8,20 +8,43 @@ import { useCasesContext } from '@/contexts/casesContext';
 import Cookies from 'js-cookie';
 import Select from 'react-select';
 import Spinner from '@/components/Spinner';
-import { useToggle } from '@/hooks';
+import AsyncSelect from 'react-select/async';
+import { useAsyncSelect, useToggle } from '@/hooks';
+import { useEffect } from 'react';
+import { assistant as fetchProducts } from '@/services/productsServices';
+import IProductAssistant from '@/types/assistant/IProductAssistant';
+import type { AsyncSelectOption } from '@/hooks/useAsyncSelect';
 
 type StatusOption = { value: string; label: string };
 
 const statusOptions: StatusOption[] = [
-{ value: 'ATRIBUIDO', label: 'ATRIBUIDO' },
-{ value: 'AGUARDANDO TESTE', label: 'AGUARDANDO TESTE' },
-{ value: 'CONCLUIDO', label: 'CONCLUIDO' },
+	{ value: 'ATRIBUIDO', label: 'ATRIBUIDO' },
+	{ value: 'AGUARDANDO TESTE', label: 'AGUARDANDO TESTE' },
+	{ value: 'CONCLUIDO', label: 'CONCLUIDO' },
 ];
 
 const CaseFilters = () => {
 	const methods = useForm<ICaseFilter>();
 	const { fetchCases, loading } = useCasesContext();
 	const [showFilters, toggleFilters] = useToggle(false);
+	const produtoId = methods.watch('produto_id');
+
+	const {
+		loadOptions: loadProductOptions,
+		selectedOption: selectedProduct,
+		setSelectedOption: setSelectedProduct,
+	} = useAsyncSelect<IProductAssistant>({
+		fetchItems: async (input) => fetchProducts({ search: input, nome: input }),
+		getOptionLabel: (product) => product.nome_projeto || product.setor || 'Produto sem nome',
+		getOptionValue: (product) => product.id,
+		debounceMs: 1000,
+	});
+
+	useEffect(() => {
+		if (!produtoId) {
+			setSelectedProduct(null);
+		}
+	}, [produtoId, setSelectedProduct]);
 
 	const onSearch = (data: ICaseFilter) => {
 		const trimmedCaseNumber = data.numero_caso?.trim();
@@ -30,6 +53,7 @@ const CaseFilters = () => {
 			? { numero_caso: trimmedCaseNumber }
 			: {
 					status_descricao: data.status_descricao || undefined,
+					produto_id: data.produto_id || undefined,
 					usuario_dev_id: Cookies.get('user_id'),
 					sort_by: 'prioridade',
 				};
@@ -61,6 +85,33 @@ const CaseFilters = () => {
 									name="numero_caso"
 									placeholder="Digite o numero..."
 									className="form-control-sm"
+								/>
+							</Col>
+								<Col xs={12} sm={12} md="auto">
+								<Form.Label className="fw-medium text-muted small">Produto</Form.Label>
+								<Controller
+									name="produto_id"
+									control={methods.control}
+									render={({ field }) => (
+										<AsyncSelect<AsyncSelectOption<IProductAssistant>, false>
+											cacheOptions
+											defaultOptions={selectedProduct ? [selectedProduct] : []}
+											loadOptions={loadProductOptions}
+											inputId="produto-id"
+											className="react-select case-status-select"
+											classNamePrefix="react-select"
+											placeholder="Pesquise um produto..."
+											isClearable
+											value={selectedProduct}
+											onChange={(option) => {
+												setSelectedProduct(option);
+												field.onChange(option?.value ?? '');
+											}}
+											onBlur={field.onBlur}
+											noOptionsMessage={() => 'Nenhum produto encontrado'}
+											loadingMessage={() => 'Carregando...'}
+										/>
+									)}
 								/>
 							</Col>
 							<Col xs={12} sm={12} md="auto">

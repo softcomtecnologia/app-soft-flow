@@ -144,12 +144,10 @@ const Topbar = ({topbarDark, toggleMenu, navOpen}: TopbarProps) => {
                     <li className="dropdown d-none d-sm-inline-block">
                         <AppsDropdown/>
                     </li>
-                    <li className="d-none d-sm-inline-block">
-                        <OverlayTrigger placement="left" overlay={<Tooltip id="dark-mode-toggler">Theme Mode</Tooltip>}>
-                            <div className="nav-link" id="light-dark-mode" onClick={toggleDarkMode}>
-                                <i className="ri-moon-line font-22"/>
-                            </div>
-                        </OverlayTrigger>
+                    <li className="d-inline-block">
+                        <div className="nav-link" id="light-dark-mode" onClick={toggleDarkMode}>
+                            <i className="ri-moon-line font-22"/>
+                        </div>
                     </li>
 
                     <li className="d-none d-md-inline-block">
