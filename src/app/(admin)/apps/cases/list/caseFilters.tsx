@@ -12,10 +12,13 @@ import AsyncSelect from 'react-select/async';
 import { useAsyncSelect, useToggle } from '@/hooks';
 import { useEffect } from 'react';
 import { assistant as fetchProducts } from '@/services/productsServices';
+import { assistant as fetchProjects } from '@/services/projectsServices';
 import { assistant as fetchUsers } from '@/services/usersServices';
 import IProductAssistant from '@/types/assistant/IProductAssistant';
+import IProjectAssistant from '@/types/assistant/IProjectAssistant';
 import IUserAssistant from '@/types/assistant/IUserAssistant';
 import type { AsyncSelectOption } from '@/hooks/useAsyncSelect';
+import CasesModal from './casesModal';
 
 type StatusOption = { value: string; label: string };
 
@@ -30,12 +33,16 @@ const CaseFilters = () => {
 	const { fetchCases, loading } = useCasesContext();
 	const [showFilters, toggleFilters] = useToggle(false);
 	const produtoId = methods.watch('produto_id');
+	const projetoId = methods.watch('projeto_id');
 	const usuarioId = methods.watch('usuario_id');
 
 	const {
 		loadOptions: loadProductOptions,
 		selectedOption: selectedProduct,
 		setSelectedOption: setSelectedProduct,
+		defaultOptions: defaultProductOptions,
+		triggerDefaultLoad: triggerProductDefaultLoad,
+		isLoading: isLoadingProducts,
 	} = useAsyncSelect<IProductAssistant>({
 		fetchItems: async (input) => fetchProducts({ search: input, nome: input }),
 		getOptionLabel: (product) => product.nome_projeto || product.setor || 'Produto sem nome',
@@ -44,9 +51,33 @@ const CaseFilters = () => {
 	});
 
 	const {
+		loadOptions: loadProjectOptions,
+		selectedOption: selectedProject,
+		setSelectedOption: setSelectedProject,
+		defaultOptions: defaultProjectOptions,
+		triggerDefaultLoad: triggerProjectDefaultLoad,
+		isLoading: isLoadingProjects,
+	} = useAsyncSelect<IProjectAssistant>({
+		fetchItems: async (input) => {
+			const fallbackUserId = usuarioId && usuarioId !== '' ? usuarioId : Cookies.get('user_id');
+			return fetchProjects({
+				search: input,
+				nome_projeto: input,
+				...(fallbackUserId ? { usuario_id: fallbackUserId } : {}),
+			});
+		},
+		getOptionLabel: (project) => project.nome_projeto || project.setor || 'Projeto sem nome',
+		getOptionValue: (project) => project.id,
+		debounceMs: 1000,
+	});
+
+	const {
 		loadOptions: loadUserOptions,
 		selectedOption: selectedUser,
 		setSelectedOption: setSelectedUser,
+		defaultOptions: defaultUserOptions,
+		triggerDefaultLoad: triggerUserDefaultLoad,
+		isLoading: isLoadingUsers,
 	} = useAsyncSelect<IUserAssistant>({
 		fetchItems: async (input) => fetchUsers({ search: input, nome_suporte: input }),
 		getOptionLabel: (user) => user.nome_suporte || user.setor || 'Usuario sem nome',
@@ -59,6 +90,12 @@ const CaseFilters = () => {
 			setSelectedProduct(null);
 		}
 	}, [produtoId, setSelectedProduct]);
+
+	useEffect(() => {
+		if (!projetoId) {
+			setSelectedProject(null);
+		}
+	}, [projetoId, setSelectedProject]);
 
 	useEffect(() => {
 		if (!usuarioId) {
@@ -74,6 +111,7 @@ const CaseFilters = () => {
 					: {
 							status_descricao: data.status_descricao || undefined,
 							produto_id: data.produto_id || undefined,
+							projeto_id: data.projeto_id || undefined,
 							usuario_dev_id: data.usuario_id && data.usuario_id != "" ? data.usuario_id : Cookies.get('user_id'),
 							sort_by: 'prioridade',
 						};
@@ -84,15 +122,23 @@ const CaseFilters = () => {
 	return (
 		<FormProvider {...methods}>
 			<form onSubmit={methods.handleSubmit(onSearch)} className="mb-3">
-				<div className="d-flex align-items-center gap-2 mb-3">
-					<Button type="button" variant="outline-secondary" size="sm" onClick={toggleFilters}>
-						<i className="uil uil-search" />
-					</Button>
-					{!showFilters && (
-						<Button type="submit" variant="primary" size="sm" disabled={loading}>
-							{loading ? 'Pesquisando...' : 'Pesquisar'}
+				<div className="d-flex flex-wrap align-items-center gap-2 mb-3">
+					<div className="d-flex align-items-center gap-2">
+						<Button type="button" variant="outline-secondary" size="sm" onClick={toggleFilters}>
+							<i className="uil uil-search" />
 						</Button>
-					)}
+						{!showFilters && (
+							<Button type="submit" variant="primary" size="sm" disabled={loading}>
+								{loading ? 'Pesquisando...' : 'Pesquisar'}
+							</Button>
+						)}
+					</div>
+					<CasesModal
+						containerClassName="d-inline-flex ms-auto"
+						buttonProps={{
+							size: 'sm',
+						}}
+					/>
 				</div>
 				<Collapse in={showFilters}>
 					<div>
@@ -115,7 +161,7 @@ const CaseFilters = () => {
 									render={({ field }) => (
 										<AsyncSelect<AsyncSelectOption<IProductAssistant>, false>
 											cacheOptions
-											defaultOptions={selectedProduct ? [selectedProduct] : []}
+											defaultOptions={selectedProduct ? [selectedProduct] : defaultProductOptions}
 											loadOptions={loadProductOptions}
 											inputId="produto-id"
 											className="react-select case-status-select"
@@ -128,7 +174,40 @@ const CaseFilters = () => {
 												field.onChange(option?.value ?? '');
 											}}
 											onBlur={field.onBlur}
-											noOptionsMessage={() => 'Nenhum produto encontrado'}
+											onMenuOpen={() => {
+												triggerProductDefaultLoad();
+											}}
+											noOptionsMessage={() => (isLoadingProducts ? 'Carregando...' : 'Nenhum produto encontrado')}
+											loadingMessage={() => 'Carregando...'}
+										/>
+									)}
+								/>
+							</Col>
+							<Col xs={12} sm={6} md={6} lg={3}>
+								<Form.Label className="fw-medium text-muted small">Projeto</Form.Label>
+								<Controller
+									name="projeto_id"
+									control={methods.control}
+									render={({ field }) => (
+										<AsyncSelect<AsyncSelectOption<IProjectAssistant>, false>
+											cacheOptions
+											defaultOptions={selectedProject ? [selectedProject] : defaultProjectOptions}
+											loadOptions={loadProjectOptions}
+											inputId="projeto-id"
+											className="react-select case-status-select"
+											classNamePrefix="react-select"
+											placeholder="Pesquise um projeto..."
+											isClearable
+											value={selectedProject}
+											onChange={(option) => {
+												setSelectedProject(option);
+												field.onChange(option?.value ?? '');
+											}}
+											onBlur={field.onBlur}
+											onMenuOpen={() => {
+												triggerProjectDefaultLoad();
+											}}
+											noOptionsMessage={() => (isLoadingProjects ? 'Carregando...' : 'Nenhum projeto encontrado')}
 											loadingMessage={() => 'Carregando...'}
 										/>
 									)}
@@ -142,7 +221,7 @@ const CaseFilters = () => {
 									render={({ field }) => (
 										<AsyncSelect<AsyncSelectOption<IUserAssistant>, false>
 											cacheOptions
-											defaultOptions={selectedUser ? [selectedUser] : []}
+											defaultOptions={selectedUser ? [selectedUser] : defaultUserOptions}
 											loadOptions={loadUserOptions}
 											inputId="usuario-id"
 											className="react-select case-status-select"
@@ -155,7 +234,10 @@ const CaseFilters = () => {
 												field.onChange(option?.value ?? '');
 											}}
 											onBlur={field.onBlur}
-											noOptionsMessage={() => 'Nenhum usuario encontrado'}
+											onMenuOpen={() => {
+												triggerUserDefaultLoad();
+											}}
+											noOptionsMessage={() => (isLoadingUsers ? 'Carregando...' : 'Nenhum usuario encontrado')}
 											loadingMessage={() => 'Carregando...'}
 										/>
 									)}

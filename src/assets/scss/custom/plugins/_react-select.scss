@@ -95,7 +95,15 @@
     background-color: $dropdown-link-hover-bg !important;
   }
   .react-select__single-value {
-    color: #{map-get($grays, "600")} !important;
+    color: $input-color !important;
+  }
+  .react-select__placeholder {
+    color: rgba($input-color, 0.65) !important;
+  }
+  .react-select__input-container {
+    .react-select__input {
+      color: $input-color !important;
+    }
   }
   .react-select__multi-value {
     background-color: rgba($primary, 0.2) !important;

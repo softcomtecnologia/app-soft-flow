@@ -3,7 +3,6 @@ import { Card, CardBody, Col, Row } from 'react-bootstrap';
 import CaseFilters from './caseFilters';
 import CasesTable from './cases';
 import Kpis from './kpis';
-import CasesModal from './casesModal';
 import { CasesProvider, useCasesContext } from '@/contexts/casesContext';
 import { ToastContainer, toast } from 'react-toastify';
 
@@ -17,14 +16,8 @@ const CasesList = () => {
 						<CardBody>
 							<div className="mb-3">
 								<Row className="align-items-center g-2">
-									<Col xs={12} lg={8}>
+									<Col xs={12}>
 										<CaseFilters />
-									</Col>
-
-									<Col xs={12} lg={4} className="text-lg-end">
-										<div className="mt-2 mt-lg-0">
-											<CasesModal />
-										</div>
 									</Col>
 								</Row>
 							</div>
